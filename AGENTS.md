@@ -2,7 +2,7 @@
 
 Build a small, portable, one-owner macOS application. Preserve the actual AubOS design vocabulary. Reuse reviewed source components and record provenance. Do not invent a new dashboard theme.
 
-Canonical local path: `~/dev/Vorton`. Verify the Git remote before historical task work: this repository is `AubreyF/vorton-local`, not the cloud platform. On the development machine the old cloud checkout is now `~/dev/VortonCloud`. Never apply a historical Vorton Cloud task to this local core merely because its old working directory was named `vorton`.
+Canonical local path: `~/dev/vorton`. Verify the Git remote before historical task work: this repository is `AubreyF/vorton-local`, not the cloud platform. On the development machine the old cloud checkout is now `~/dev/vortoncloud`. Never apply a historical Vorton Cloud task to this local core merely because its old working directory was named `vorton`.
 
 All development writes stay in this repository. `/Users/aubreyfalconer/dev/aubos` is a read-only, stale reference. The destination AubOS directory is authoritative. Never overwrite it from this machine.
 

@@ -2,7 +2,7 @@
 
 ## Owner decisions, September 13, 2026
 
-Vorton Local supersedes the larger cloud platform as the immediate delivery path. Vorton Cloud remains available with its unfinished work preserved. The new GitHub repository is private. The target is a similar MacBook Pro, at `~/dev/Vorton`, containing AubOS and FreedOS. Literal `/dev` is not a target. HTTPS through Tailscale is already solved and must not be changed.
+Vorton Local supersedes the larger cloud platform as the immediate delivery path. Vorton Cloud remains available with its unfinished work preserved. The new GitHub repository is private. The target is a similar MacBook Pro, at `~/dev/vorton`, containing AubOS and FreedOS. Literal `/dev` is not a target. HTTPS through Tailscale is already solved and must not be changed.
 
 One owner. No Supabase, hosted identity, cloud infrastructure, or new API subscriptions. Use the destination's authenticated local Codex installation. Preserve a hard 50 percent weekly allowance reserve. No source-side AubOS changes. Prepare a single copyable directory and one destination continuity prompt.
 
@@ -36,6 +36,6 @@ After the package and continuity prompt are complete, create a new user-visible 
 
 ## Current state
 
-Path correction: use `~/dev/Vorton` on both Macs, without a local suffix. The development cloud checkout was moved to `~/dev/VortonCloud` with its uncommitted changes preserved and linked worktrees repaired. Package source and personal application attachment remain separate.
+Path correction: use `~/dev/vorton` on both Macs, without a local suffix. The development cloud checkout was moved to `~/dev/vortoncloud` with its uncommitted changes preserved and linked worktrees repaired. Package source and personal application attachment remain separate.
 
 The local pilot is implemented. GitHub `AubreyF/vorton-local` remains private. Existing GitHub repository was renamed to `AubreyF/vorton-cloud`; its dirty worktree is preserved. `START-HERE.md` is the destination continuity prompt. `docs/VALIDATION.md` records development evidence and the checks that remain on the authoritative destination. No factory or scheduler was implemented.

@@ -4,7 +4,7 @@ Paste the following prompt into the destination agent task, with this Vorton dir
 
 ---
 
-You are taking custody of Vorton Local on the owner's authoritative MacBook Pro. The owner authorized this local setup. This is a one-owner private-tailnet application with AubOS and FreedOS inside one directory, normally `~/dev/Vorton`. `/dev` is the macOS device directory and is never a project target.
+You are taking custody of Vorton Local on the owner's authoritative MacBook Pro. The owner authorized this local setup. This is a one-owner private-tailnet application with AubOS and FreedOS inside one directory, normally `~/dev/vorton`. `/dev` is the macOS device directory and is never a project target.
 
 ## Outcome
 

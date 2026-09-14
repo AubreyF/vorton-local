@@ -18,7 +18,7 @@ const revision = spawnSync("git", ["rev-parse", "HEAD"], {
 });
 await mkdir(path.join(root, "output"), { recursive: true, mode: 0o700 });
 const parent = await mkdtemp(path.join(root, "output", "delivery-"));
-const destination = path.join(parent, "Vorton");
+const destination = path.join(parent, "vorton");
 await mkdir(destination, { mode: 0o700 });
 const files = [];
 for (const file of inventory) {

@@ -30,6 +30,10 @@ Factory execution and resource-aware scheduling are being developed separately i
 
 ## Small infrastructure
 
+The working directory is `~/dev/Vorton` on both the development and destination machines. The repository name remains `vorton-local`; it does not dictate the folder name. The older cloud checkout lives separately at `~/dev/VortonCloud` on the development machine.
+
+The transfer ZIP is a small source package, not a complete installed AubOS image. It includes the local core, two empty installation directories, design tokens, tests, and setup instructions. It excludes dependencies, compiled assets, credentials, and the original AubOS application's code and personal records. The destination agent installs dependencies, builds the core, and attaches the destination's authoritative AubOS using `START-HERE.md`. Do not overwrite that application with a stale development copy.
+
 The pilot targets a single owner on macOS. It does not require Supabase, a hosted database, a new login platform, or cloud infrastructure. Private network access is supplied by the owner. The application must not be exposed directly to the public internet.
 
 Executive reviews use copyable prompts and validated JSON responses through an existing authenticated agent. This pilot starts no model calls itself. No API key is bundled or required by the application. An agent provider may still process the evidence explicitly supplied to it; local storage does not mean all model processing occurs on the host.

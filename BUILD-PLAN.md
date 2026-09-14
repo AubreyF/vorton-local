@@ -36,4 +36,6 @@ After the package and continuity prompt are complete, create a new user-visible 
 
 ## Current state
 
+Path correction: use `~/dev/Vorton` on both Macs, without a local suffix. The development cloud checkout was moved to `~/dev/VortonCloud` with its uncommitted changes preserved and linked worktrees repaired. Package source and personal application attachment remain separate.
+
 The local pilot is implemented. GitHub `AubreyF/vorton-local` remains private. Existing GitHub repository was renamed to `AubreyF/vorton-cloud`; its dirty worktree is preserved. `START-HERE.md` is the destination continuity prompt. `docs/VALIDATION.md` records development evidence and the checks that remain on the authoritative destination. No factory or scheduler was implemented.

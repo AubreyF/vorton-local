@@ -1,5 +1,13 @@
-export type Profile = "AubOS" | "FreedOS";
-export type Role = "CEO" | "CTO" | "CMO" | "COO" | "CFO";
+// Profile admission is enforced by the server registry; records carry its exact ID.
+export type Profile = string;
+export type Role = string;
+export type CouncilConfig = {
+  moduleId: string;
+  moduleVersion: number;
+  profile: Profile;
+  identities: { id: string; name: string; title: string; mandate: string; voice: string; expertise: string; blindSpot: string; challenge: string; fictional: boolean; inherited: boolean }[];
+  behavior: { focus: string; decisionCriteria: string; maxRecommendations: number; challengeRounds: number; reportSections: string[] };
+};
 export type GoalFields = {
   title: string;
   intent: string;
@@ -49,11 +57,28 @@ export type Recommendation = {
   createdAt: string;
 };
 export type State = {
+  council?: CouncilConfig;
+  canonical?: {
+    goals: Record<string, string>[];
+    tasks: Record<string, string>[];
+  };
+  sourceSummary?: { snapshotDate: string; goals: number; tasks: number };
   profile: Profile;
   revision: number;
   goals: Goal[];
   tasks: Task[];
   recommendations: Recommendation[];
+  councilSessions?: {
+    id: string;
+    status: "published";
+    publishedAt: string;
+    basedOnRevision: number;
+    evidenceDigest: string;
+    summary: string;
+    recommendationIds: string[];
+    council?: CouncilConfig;
+    options?: {title:string;status:string;rationale:string;evidence:string}[];
+  }[];
   events: {
     id: string;
     at: string;

@@ -1,0 +1,198 @@
+.vorton-workspace .council-experience { --council-line: color-mix(in srgb, var(--aub-text) 24%, var(--aub-card-solid)); min-width: 0; margin-bottom: 36px; }
+.vorton-workspace .council-experience button { -webkit-tap-highlight-color: transparent; }
+.vorton-workspace .council-kicker { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .16em; font-weight: 600; color: var(--aub-text-mid); }
+.vorton-workspace .council-timeline { min-width: 0; padding: 12px 0 0; margin-bottom: 12px; }
+.vorton-workspace .timeline-heading { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
+.vorton-workspace .council-calendar { position: relative; }
+.vorton-workspace .timeline-calendar-button { display: grid; place-items: center; padding: 8px; border: 0; color: var(--aub-accent); background: transparent; }
+.vorton-workspace .council-calendar-panel { position: absolute; z-index: 110; top: calc(100% + 12px); right: 0; width: min(320px,calc(100vw - 110px)); padding: 18px; border: 1px solid var(--aub-border); border-radius: var(--aub-card-radius); background: var(--aub-card-solid); box-shadow: var(--aub-card-shadow); }
+.vorton-workspace .council-calendar-panel::before { content: ""; position: absolute; top: -6px; right: 12px; width: 10px; height: 10px; transform: rotate(45deg); background: var(--aub-card-solid); border-top: 1px solid var(--aub-border); border-left: 1px solid var(--aub-border); }
+.vorton-workspace .calendar-fields { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 10px; margin-bottom: 14px; }
+.vorton-workspace .calendar-fields label { display: grid; gap: 5px; font-size: .72rem; }
+.vorton-workspace .calendar-fields input, .vorton-workspace .calendar-fields select { width: 100%; min-width: 0; padding: 7px; }
+.vorton-workspace .calendar-days { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 3px; }
+.vorton-workspace .calendar-days button { min-width: 0; padding: 7px 0; border: 1px solid transparent; font-size: .75rem; }
+.vorton-workspace .calendar-days .has-session { color: var(--aub-accent); background: var(--aub-accent-soft); }
+.vorton-workspace .calendar-days [aria-current="date"] { border-color: var(--aub-accent); }
+.vorton-workspace .calendar-weekday { text-align: center; font-size: .65rem; color: var(--aub-text-dim); padding-bottom: 6px; }
+.vorton-workspace .calendar-notice { font-size: .7rem; line-height: 1.5; margin: 12px 0 0; color: var(--aub-text-mid); }
+.vorton-workspace .timeline-heading h2 { margin: 5px 0 0; font-size: 1.5rem; }
+.vorton-workspace .timeline-rail { position: relative; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; padding: 18px 0 12px; max-width: none; }
+.vorton-workspace .timeline-rail ol { display: flex; align-items: start; list-style: none; margin: 0; padding: 0; min-width: 100%; width: max-content; }
+/* Explicit widths keep WebKit's intrinsic row width equal to its scroll content. */
+.vorton-workspace .timeline-rail li { position: relative; width: 150px; flex: 0 0 auto; }
+.vorton-workspace .timeline-rail ol[data-present-end]::after { content: ""; width: max(0px,calc(var(--timeline-right-inset, 0px) - 16px)); flex: 0 0 auto; }
+.vorton-workspace .timeline-rail ol[data-present-end] li:last-child { width: 92px; margin-left: 29px; }
+.vorton-workspace .timeline-stop { display: flex; width: 100%; flex-direction: column; align-items: center; gap: 5px; border: 0; padding: 4px 16px 12px; border-radius: var(--aub-control-radius); }
+.vorton-workspace .timeline-day { font: 500 1rem var(--aub-font-display); }
+.vorton-workspace .timeline-orbit { display: grid; place-items: center; width: 60px; height: 60px; border: 1px solid transparent; border-radius: 50%; z-index: 1; }
+.vorton-workspace .timeline-dot { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--council-line); border-radius: 50%; background: var(--aub-card-solid); color: var(--aub-text-mid); font-size: .75rem; }
+.vorton-workspace .timeline-stop[aria-pressed="true"] .timeline-orbit { border-color: var(--aub-text); background: var(--aub-accent-soft); }
+.vorton-workspace .timeline-stop[aria-pressed="true"] .timeline-dot { color: var(--aub-logo-text); background: var(--aub-logo-background); border-color: var(--aub-text); }
+.vorton-workspace .timeline-time { font-size: .75rem; color: var(--aub-text-mid); }
+.vorton-workspace .timeline-caption { font-size: .67rem; color: var(--aub-text-dim); font-weight: 400; }
+.vorton-workspace .timeline-empty { padding: 12px 0; font-size: .9rem; }
+.vorton-workspace .council-session-brief { display: flex; justify-content: space-between; gap: 18px; align-items: center; margin-bottom: 24px; scroll-margin-top: 110px; }
+.vorton-workspace .council-session-brief h2 { margin: 8px 0; font-size: clamp(1.15rem,2vw,1.7rem); }
+.vorton-workspace .council-session-brief p { margin: 0; font-size: .8rem; }
+.vorton-workspace .session-record-link { color: var(--aub-text); text-decoration: none; font-size: .8rem; white-space: nowrap; padding: 8px 0; }
+.vorton-workspace .session-record-link span { padding-left: 12px; }
+.vorton-workspace .council-view-stage { min-width: 0; scroll-margin-top: 110px; }
+.vorton-workspace .submission-preview { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; white-space: normal; line-height: 1.65; font-size: .95rem; }
+.vorton-workspace .council-attribution { font-size: .75rem; margin: 20px 0 26px; line-height: 1.6; color: var(--aub-text-dim); }
+.vorton-workspace .council-evidence { scroll-margin-top: 100px; }
+.vorton-workspace #council-timeline, .vorton-workspace #council-roundtable, .vorton-workspace .council-view-stage > [id] { scroll-margin-top: 110px; }
+.vorton-workspace .council-session-preview { overflow-wrap: anywhere; line-height: 1.5; max-width: 65ch; margin: 12px 0; }
+.vorton-workspace .panel.council-session { padding-bottom: 18px; }
+.vorton-workspace .council-session-preview ul { display: grid; gap: 10px; padding-left: 20px; margin: 10px 0; }
+.vorton-workspace .council-session-preview li .badge { margin-left: 10px; white-space: nowrap; }
+.vorton-workspace .session-preview-context { font-size: .8rem; color: var(--aub-text-dim); margin: 10px 0 0; }
+.vorton-workspace .council-session .council-report-toggle { display: inline-flex; align-items: center; gap: 8px; margin: 8px 0 0; padding: 6px 12px; border: 0; background: transparent; box-shadow: none; color: var(--aub-accent); }
+.vorton-workspace .council-session .council-report-toggle:hover { background: var(--aub-accent-soft); }
+.vorton-workspace .council-report-accordion { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden; transition: grid-template-rows 280ms ease, opacity 200ms ease, visibility 280ms; }
+.vorton-workspace .council-report-accordion[data-expanded="true"] { grid-template-rows: 1fr; opacity: 1; visibility: visible; }
+.vorton-workspace .council-report-accordion-inner { min-height: 0; overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { .vorton-workspace .council-report-accordion { transition: none; } }
+/* Provenance: component imported from aubos/dashboard/web/app/design-system/
+   section-navigator.tsx; rail treatment adapted from app/aubos-surfaces.css for
+   the portable workspace, where that application stylesheet is not loaded. */
+.vorton-workspace .council-page-navigation .section-navigator-layout { display: grid; grid-template-columns: minmax(0,1fr); }
+.vorton-workspace .council-page-navigation .section-navigator-content { grid-area: 1 / 1; width: min(100%,calc(100vw - 408px)); min-width: 0; margin: 0 auto; }
+/* The rail starts below the full-width timeline and then sticks while its
+   content scrolls. Sharing one grid cell preserves the existing content width. */
+.vorton-workspace .council-page-navigation .section-navigator-rail { grid-area: 1 / 1; align-self: start; position: sticky; z-index: 11; top: calc(var(--navigation-height,64px) + 28px); left: auto; margin-top: 240px; margin-left: calc((100% - 100vw) / 2 + 8px); display: flex; width: 176px; height: auto; align-items: stretch; justify-content: flex-start; flex-direction: column; gap: 2px; padding: 8px 0 18px; max-height: calc(100dvh - 120px); overflow-x: hidden; overflow-y: auto; }
+.vorton-workspace .council-page-navigation .section-navigator-rail > p { margin: 0; padding: 0 12px 13px; color: var(--aub-text-mid); font-size: .69rem; letter-spacing: .13em; text-transform: uppercase; }
+.vorton-workspace .council-page-navigation .section-navigator-link { display: flex; height: auto; min-height: 42px; padding: 10px 12px 10px 10px; border-left: 2px solid transparent; border-radius: 0 var(--aub-control-radius) var(--aub-control-radius) 0; color: var(--aub-text-mid); font-family: var(--aub-font-display); font-weight: 400; text-decoration: none; white-space: normal; }
+.vorton-workspace .council-page-navigation .section-navigator-link:hover, .vorton-workspace .council-page-navigation .section-navigator-link:focus-visible, .vorton-workspace .council-page-navigation .section-navigator-link.active { color: var(--aub-accent); background: var(--aub-accent-soft); border-left-color: var(--aub-accent); }
+.vorton-workspace .council-page-navigation .section-navigator-mobile { display: none; }
+.vorton-workspace .council-goals { scroll-margin-top: 110px; }
+.vorton-workspace .council-goals ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 24px; }
+.vorton-workspace .council-goals h3 { margin: 0 0 8px; }
+@media (max-width: 1180px) {
+  .vorton-workspace .council-page-navigation .section-navigator-layout { display: block; }
+  .vorton-workspace .council-page-navigation .section-navigator-content { width: 100%; margin: 0; }
+  .vorton-workspace .council-page-navigation .section-navigator-rail { display: none; }
+  .vorton-workspace .council-page-navigation .section-navigator-mobile { display: flex; align-items: stretch; justify-content: flex-start; gap: 0; width: 100%; height: auto; overflow-x: auto; margin: 0 0 24px; padding: 0; border: 0; box-shadow: none; background: transparent; }
+  .vorton-workspace .council-page-navigation .section-navigator-mobile .section-navigator-link { flex-shrink: 0; border-left: 0; border-bottom: 2px solid transparent; border-radius: 0; }
+  .vorton-workspace .council-page-navigation .section-navigator-mobile .section-navigator-link.active { border-bottom-color: var(--aub-accent); }
+}
+.vorton-workspace .council-evidence > summary { padding: 20px 0; font-family: var(--aub-font-display); font-size: 1.15rem; }
+.vorton-workspace .council-evidence > summary > span:last-child { float: right; font-family: var(--aub-font-body); font-size: .75rem; color: var(--aub-text-mid); }
+.vorton-workspace .council-evidence .panel { box-shadow: none; margin: 0 0 20px; }
+
+
+/* Roundtable: real text bubbles sit around an elliptical council table. */
+.vorton-workspace .roundtable-layout { position: relative; height: var(--table-height); border: 0; background: transparent; overflow: hidden; }
+.vorton-workspace .council-table { position: absolute; left: var(--table-center-x); top: var(--table-center-y); width: var(--council-table-width); height: var(--council-table-height); transform: translate(-50%,-50%); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 1px solid var(--aub-accent); border-radius: 50%; background: radial-gradient(ellipse at center, var(--aub-card-solid) 16%, transparent 65%), radial-gradient(ellipse at 30% 25%, var(--aub-accent-soft), transparent 65%), var(--aub-card-solid); box-shadow: 0 0 65px var(--aub-accent-soft); }
+.vorton-workspace .council-table > * { position: relative; z-index: 1; }
+/* Every orbital curve stays inside the same compact oval boundary. */
+.vorton-workspace .council-table > .council-orbits { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; color: var(--aub-accent); opacity: .55; pointer-events: none; }
+.vorton-workspace .council-table > strong { font: 500 1.25rem var(--aub-font-display); }
+.vorton-workspace .council-table > span { color: var(--aub-text-mid); font-size: .78rem; margin-top: 8px; }
+.vorton-workspace .council-table .table-instruction { line-height: 1.6; padding-top: 18px; }
+.vorton-workspace .council-seat { position: absolute; left: var(--seat-x); top: var(--seat-y); transform: translate(-50%,calc(var(--portrait-diameter) * -.5)); width: 218px; padding: 0; display: flex; flex-direction: column; align-items: center; border: 0; border-radius: 12px; background: transparent; }
+.vorton-workspace .council-seat:hover, .vorton-workspace .council-seat:focus-visible { background: transparent; }
+.vorton-workspace .seat-portrait { box-sizing: border-box; width: var(--portrait-diameter); height: var(--portrait-diameter); flex-shrink: 0; border: 2px solid var(--voice-accent); border-radius: 50%; padding: 3px; display: flex; background: var(--aub-card-solid); box-shadow: 0 0 0 5px var(--aub-card); }
+.vorton-workspace .council-seat > strong { font: 500 1.05rem var(--aub-font-display); margin: 7px 0 12px; }
+.vorton-workspace .seat-bubble { display: block; position: relative; width: 100%; text-align: left; padding: 13px 15px; border: 1px solid var(--council-line); border-radius: 12px; background: var(--aub-card-solid); transform-origin: top center; transform: scale(1); opacity: 1; }
+.vorton-workspace .seat-bubble::before { content: ""; position: absolute; top: -6px; left: calc(50% - 5px); width: 10px; height: 10px; transform: rotate(45deg); background: var(--aub-card-solid); border-top: 1px solid var(--council-line); border-left: 1px solid var(--council-line); }
+.vorton-workspace .council-seat:hover .seat-bubble, .vorton-workspace .council-seat:focus-visible .seat-bubble { border-color: var(--voice-accent); }
+.vorton-workspace .seat-source { display: block; font-size: .58rem; text-transform: uppercase; letter-spacing: .06em; color: var(--aub-text-dim); margin-bottom: 6px; }
+.vorton-workspace .seat-bubble .submission-preview { -webkit-line-clamp: 3; font-size: .78rem; line-height: 1.5; font-weight: 400; color: var(--aub-text-mid); }
+.vorton-workspace .roundtable-layout[data-large-roster] { height: auto; padding: 30px; }
+.vorton-workspace .roundtable-layout[data-large-roster] .council-table { position: relative; inset: auto; transform: none; width: 220px; height: 220px; margin: 10px auto 32px; }
+.vorton-workspace .roundtable-layout[data-large-roster] .roundtable-seats { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 30px 20px; }
+.vorton-workspace .roundtable-layout[data-large-roster] .council-seat { position: relative; inset: auto; transform: none; width: 100%; }
+
+.vorton-workspace .council-empty { padding: 35px 0; text-align: center; }
+.vorton-workspace .empty-portrait-line { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 25px; }
+.vorton-workspace dialog.council-submission-dialog { position: fixed; inset: 0; margin: auto; box-sizing: border-box; max-width: min(760px,calc(100vw - 32px)); width: 760px; max-height: calc(100dvh - 48px); overflow: auto; overscroll-behavior: contain; padding: clamp(20px,4vw,38px); border-radius: var(--aub-card-radius); border: 1px solid var(--aub-text-mid); background: var(--aub-card-solid); color: var(--aub-text); }
+.vorton-workspace .council-submission-dialog::backdrop { background: rgb(0 0 0 / .65); backdrop-filter: blur(5px); }
+.vorton-workspace .council-experience { position: relative; }
+.vorton-workspace .council-submission-popover { position: absolute; z-index: 100; box-sizing: border-box; border: 1px solid var(--aub-text-mid); border-radius: var(--aub-card-radius); background: var(--aub-card-solid); color: var(--aub-text); box-shadow: var(--aub-card-shadow); transform-origin: top left; }
+.vorton-workspace .council-submission-popover::before { content: ""; position: absolute; left: calc(var(--submission-tail-left) - 8px); width: 16px; height: 16px; background: var(--aub-card-solid); transform: rotate(45deg); pointer-events: none; }
+.vorton-workspace .council-submission-popover[data-side="below"]::before { top: -9px; border-top: 1px solid var(--aub-text-mid); border-left: 1px solid var(--aub-text-mid); }
+.vorton-workspace .council-submission-popover[data-side="above"]::before { bottom: -9px; border-bottom: 1px solid var(--aub-text-mid); border-right: 1px solid var(--aub-text-mid); }
+.vorton-workspace .submission-popover-scroll { max-height: inherit; overflow: auto; overscroll-behavior: contain; padding: 28px; border-radius: inherit; }
+.vorton-workspace .council-submission-popover .submission-dialog-header > svg { width: 60px; height: 60px; }
+.vorton-workspace .council-submission-popover .submission-dialog-header h2 { font-size: 1.6rem; }
+.vorton-workspace .council-seat[aria-expanded="true"] .seat-bubble { border-color: var(--voice-accent); background: var(--aub-accent-soft); transform: scale(0); opacity: 0; pointer-events: none; }
+.vorton-workspace .submission-dialog-header { display: flex; align-items: center; gap: 18px; margin-bottom: 22px; padding-right: 24px; }
+.vorton-workspace .submission-dialog-header > svg { flex-shrink: 0; }
+.vorton-workspace .submission-dialog-header h2 { font-size: 2rem; margin: 7px 0; overflow-wrap: anywhere; }
+.vorton-workspace .submission-dialog-header > div { min-width: 0; }
+.vorton-workspace .submission-dialog-header p { font-size: .85rem; margin: 0; }
+.vorton-workspace .submission-close { position: absolute; top: 12px; right: 12px; display: grid; place-items: center; padding: 0; width: 44px; height: 44px; border: 0; border-radius: var(--aub-control-radius); background: transparent; }
+.vorton-workspace .submission-close svg { width: 32px; height: 32px; }
+.vorton-workspace .submission-full { overflow-wrap: anywhere; line-height: 1.8; }
+.vorton-workspace .submission-full p { white-space: pre-wrap; line-height: inherit; }
+.vorton-workspace .submission-recommendations { margin-top: 24px; padding-top: 20px; }
+.vorton-workspace .submission-recommendations > a { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; padding: 12px 0; color: var(--aub-text); font-size: .9rem; overflow-wrap: anywhere; }
+.vorton-workspace .submission-profile { margin-top: 22px; padding-top: 18px; font-size: .85rem; }
+@media (max-width: 1100px) {
+  .vorton-workspace .council-seat { width: 180px; }
+}
+@media (max-width: 760px) {
+  .vorton-workspace .timeline-heading h2 { font-size: 1.3rem; }
+  .vorton-workspace .timeline-rail li { width: 120px; }
+  .vorton-workspace .timeline-rail ol[data-present-end] li:last-child { margin-left: 14px; }
+  .vorton-workspace .council-session-brief { align-items: flex-start; }
+  .vorton-workspace .council-session-brief h2 { font-size: 1.2rem; line-height: 1.35; }
+  .vorton-workspace .session-record-link { white-space: normal; min-width: 72px; font-size: .7rem; }
+  .vorton-workspace .council-evidence > summary > span:last-child { float: none; display: block; margin-top: 8px; }
+  .vorton-workspace .roundtable-layout { height: auto; padding: 12px 14px; }
+  .vorton-workspace .council-table { position: relative; inset: auto; transform: none; width: 184px; height: 184px; margin: 4px auto 24px; }
+  .vorton-workspace .council-table .table-instruction { display: none; }
+  .vorton-workspace .roundtable-seats { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 26px 12px; }
+  .vorton-workspace .council-seat { position: relative; inset: auto; transform: none; width: 100%; }
+  .vorton-workspace .roundtable-layout[data-large-roster] { padding: 20px 14px; }
+  .vorton-workspace .roundtable-layout[data-large-roster] .council-table { width: 184px; height: 184px; }
+  .vorton-workspace .roundtable-layout[data-large-roster] .roundtable-seats { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 26px 12px; }
+  .vorton-workspace .seat-bubble { padding: 12px; flex: 1; }
+  .vorton-workspace .seat-bubble .submission-preview { -webkit-line-clamp: 3; font-size: .75rem; }
+  .vorton-workspace .council-seat > strong { font-size: .9rem; min-height: 2.3em; margin-bottom: 7px; }
+  .vorton-workspace .submission-dialog-header { gap: 12px; flex-wrap: wrap; }
+  .vorton-workspace .submission-dialog-header > svg { width: 60px; height: 60px; }
+  .vorton-workspace .submission-dialog-header h2 { font-size: 1.4rem; }
+  .vorton-workspace .submission-dialog-header > div { flex: 1; min-width: 100px; }
+}
+@media (prefers-reduced-motion: reduce) { .vorton-workspace .timeline-rail { scroll-behavior: auto; } }
+@media (forced-colors: active) {
+}
+
+/* Animate light and ink without moving the click target. */
+.vorton-workspace .seat-bubble, .vorton-workspace .seat-bubble::before, .vorton-workspace .seat-portrait {
+  transition: border-color 220ms ease, background-color 220ms ease, box-shadow 260ms ease, filter 260ms ease, transform 220ms ease, opacity 220ms ease;
+}
+.vorton-workspace .council-seat:hover .seat-bubble::before,
+.vorton-workspace .council-seat:focus-visible .seat-bubble::before { border-color: var(--voice-accent); background: color-mix(in srgb, var(--voice-accent) 8%, var(--aub-card-solid)); }
+.vorton-workspace .council-seat:hover .seat-bubble,
+.vorton-workspace .council-seat:focus-visible .seat-bubble {
+  box-shadow: 0 0 20px color-mix(in srgb, var(--voice-accent) 18%, transparent);
+  background: color-mix(in srgb, var(--voice-accent) 8%, var(--aub-card-solid));
+}
+.vorton-workspace .council-seat:hover .seat-portrait,
+.vorton-workspace .council-seat:focus-visible .seat-portrait { box-shadow: 0 0 0 6px color-mix(in srgb,var(--voice-accent) 35%,transparent), 0 0 24px 7px color-mix(in srgb,var(--voice-accent) 55%,transparent), 0 0 54px 12px color-mix(in srgb,var(--voice-accent) 22%,transparent); filter: saturate(1.25) brightness(1.06); }
+.vorton-workspace .roundtable-seats { animation: council-arrive 440ms ease-out both; }
+@keyframes council-arrive { from { opacity: 0; } to { opacity: 1; } }
+.vorton-workspace .timeline-rail::-webkit-scrollbar { display: none; }
+.vorton-workspace .timeline-today { padding: 6px 12px; font-size: .75rem; border: 0; color: var(--aub-accent); }
+.vorton-workspace .timeline-vacant { cursor: default; font-weight: 400; opacity: .55; }
+.vorton-workspace .timeline-vacant .timeline-dot { width: 8px; height: 8px; border-color: var(--aub-text-dim); background: transparent; }
+.vorton-workspace [data-today="true"] .timeline-day { color: var(--aub-text); font-weight: 700; }
+.vorton-workspace [data-today="true"] .timeline-vacant { opacity: 1; }
+.vorton-workspace [data-today="true"] .timeline-dot { border-color: var(--aub-text); }
+.vorton-workspace .timeline-time { min-height: 1.4em; }
+.vorton-workspace .council-bridge-briefing { margin: 28px 0 38px; }
+.vorton-workspace:has(.council-experience) .session-source,
+.vorton-workspace:has(.council-experience) .import-panel,
+.vorton-workspace:has(.council-experience) .report-table th,
+.vorton-workspace:has(.council-experience) .report-table td { border-top: 0; border-bottom: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .vorton-workspace .roundtable-seats { animation: none; }
+  .vorton-workspace .seat-bubble, .vorton-workspace .seat-bubble::before, .vorton-workspace .seat-portrait { transition: none; }
+}
+@media (forced-colors: active) {
+  .vorton-workspace .timeline-stop[aria-pressed="true"] .timeline-orbit { outline: 2px solid Highlight; }
+  .vorton-workspace .seat-bubble, .vorton-workspace .council-table { border-color: CanvasText; }
+}

@@ -1,18 +1,37 @@
-name: Local core checks
+name: Portable Vorton checks
 on: [push, pull_request]
 permissions:
   contents: read
 jobs:
   check:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: npm
       - run: npm ci
       - run: npm run check
-      - run: npm run format:check
-      - run: npm run audit:publication
-      - run: npm audit --audit-level=high
+      - run: npm audit --audit-level=moderate
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+          cache: false
+      # Upstream v8.30.1 retains this module path in go.mod.
+      - run: go install github.com/zricethezav/gitleaks/v8@v8.30.1
+      - run: gitleaks git . --redact=100 --no-banner --ignore-gitleaks-allow --log-opts="--all"
+      - run: gitleaks dir . --redact=100 --no-banner --ignore-gitleaks-allow

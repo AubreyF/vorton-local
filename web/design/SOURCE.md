@@ -1,9 +1,23 @@
 # Design source
 
-Copied without modifying the stale source application. Original files are private owner-controlled AubOS source. This repository remains private.
+The owner authorized reuse of the reviewed visual vocabulary for portable Vorton and The Last Resort under the repository's MIT license. These individually selected design files contain interface tokens and components, not personal records or private installation logic. Their source hashes are recorded below.
 
 - `web/design/themes.css`: source `dashboard/web/app/themes.css`, SHA-256 `ee5368013004c1e84011eaa8e06289fb8a521a18bb9c82f5430e0ae9d0aed978`.
 - `web/design/theme-registry.ts`: source `dashboard/web/app/design-system/theme-registry.ts`, SHA-256 `0b41ea5dbdac3fffc8086467258d6b14ce48d0fec3d5fb7d80a110669b3854b8`.
 - `web/design/icons.tsx`: source `dashboard/web/app/design-system/icons.tsx`, SHA-256 `f96b4f7438083f8ad343deb754d824829e2fb7b0ef8ae389f3f08ea220e52a59`.
 
 Preserve the six theme identities, semantic tokens, typography, keyboard controls, and reduced-motion behavior. Adaptations live in the local application stylesheet rather than silently changing these reference tokens.
+
+The Last Resort additions, September 18, 2026:
+
+- `web/design/section-navigator.tsx`: selected source `dashboard/web/app/design-system/section-navigator.tsx`, SHA-256 `468cb79babc2deb2fd2f65a5348d0ba974bbc124f225283c5e0611bf8c71ddab`. Contains generic scrolling and section links, with no private records or installation adapters.
+- `web/main.tsx` and `web/demo-shell.css` adapt the reviewed installation-switcher interaction and header geometry: a 44px trigger, explicit menu outline, outside-click dismissal, Escape returning focus, and horizontally scrollable navigation. The palette remains the reviewed theme tokens. No personal application directory was copied.
+- `web/installed-version.tsx` is an original shared control placed after all other menu contents. It reads the running server's version and reports unavailable telemetry honestly.
+- `demo/last-resort` contains original fictional writing created for the owner's requested flagship. Council portraits use the existing deterministic inline SVG component. No external images or private records are included.
+
+Council presentation additions, September 18, 2026:
+
+- `web/council-views.tsx` and `web/council-views.css` provide the owner-selected Roundtable using reviewed AubOS color, typography, control, and surface tokens. The earlier Salon and Dispatch implementations were removed. Roundtable reuses existing council session and recommendation records, the report renderer, and organization routes.
+- `web/council-avatar.tsx` contains original inline SVG cartoon portraits drawn for the nine built-in council identities, plus deterministic portraits for custom identities. Portrait colors are illustration pigments, independent of interface status colors. No third-party artwork, remote images, fonts, image service, or API key is required.
+- `web/council-timeline.tsx` provides the continuous calendar with a bounded date window, and `web/council-calendar.tsx` provides the floating date picker. `web/council-briefing.tsx` loads the latest profile-scoped briefing for the native Bridge; the shared Bridge uses its existing state. The owner-selected Orrery shares the portraits' oval geometry and uses bounded SVG orbital curves. These presentation controls do not schedule sessions, publish council output, or accept recommendations.
+- `web/council-decisions.tsx` reuses the previous recommendation page's evidence, proposed record, prompt, and action controls. Its profile-wide queue is outside the selected session component. `web/council-decisions.css` uses the same reviewed AubOS tokens.

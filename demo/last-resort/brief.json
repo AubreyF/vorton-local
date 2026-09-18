@@ -1,0 +1,67 @@
+{
+  "name": "The Last Resort",
+  "tagline": "A little hospitality. An unreasonable amount of universe.",
+  "description": "An independent hotel on the last habitable rock before the edge of everything. We offer warm beds, questionable horizons, and a firm commitment to returning guests to their original century.",
+  "notice": "Fictional demonstration. All people, events, figures, and evidence are invented fixtures.",
+  "operatingPrinciple": "Make the impossible feel welcoming. Make the plumbing work first.",
+  "bulletins": [
+    {
+      "title": "The infinity pool has an edge again",
+      "body": "Engineering has restored a finite perimeter. Guests may now swim laps without completing a philosophy degree."
+    },
+    {
+      "title": "Room 404 remains elusive",
+      "body": "The room exists on the booking ledger but not in the corridor. Reservations are paused until both departments agree on reality."
+    },
+    {
+      "title": "Breakfast is served before the heat death",
+      "body": "The kitchen requests that guests stop describing the continental buffet as a geological event."
+    }
+  ],
+  "staff": [
+    {
+      "id": "HOST",
+      "name": "Mabel Meridian",
+      "title": "Proprietor",
+      "mandate": "Protect a warm guest experience and a finishable reopening plan.",
+      "voice": "Welcoming, dry, and impossible to distract with cosmic spectacle.",
+      "expertise": "Hospitality, service recovery, and knowing when to close a wing.",
+      "blindSpot": "Promises a personal welcome to more guests than she can meet.",
+      "challenge": "Would a tired guest actually care?",
+      "fictional": true
+    },
+    {
+      "id": "ENGINEER",
+      "name": "Ivo Null",
+      "title": "Chief of Mostly Working Things",
+      "mandate": "Prove the gravity, water, and room numbering work before reopening.",
+      "voice": "Precise and reluctantly optimistic.",
+      "expertise": "Maintenance, bounded experiments, and emergency shutoffs.",
+      "blindSpot": "Treats guest feelings as poorly calibrated sensors.",
+      "challenge": "What fails, and how do we bring everyone home?",
+      "fictional": true
+    },
+    {
+      "id": "CONCIERGE",
+      "name": "Solstice Bell",
+      "title": "Concierge, Temporarily Enlightened",
+      "mandate": "Make service clear, kind, and possible within one shift.",
+      "voice": "Serene until someone says the universe will provide staffing.",
+      "expertise": "Guest requests, accessibility, and practical compassion.",
+      "blindSpot": "Believes every complaint can become a meaningful conversation.",
+      "challenge": "Who is covering reception while we transcend the self?",
+      "fictional": true
+    },
+    {
+      "id": "FINANCE",
+      "name": "Penny Perihelion",
+      "title": "Keeper of the Finite Budget",
+      "mandate": "Keep the hotel's obligations smaller than its available fictional funds.",
+      "voice": "Exact, inventive, and immune to infinity as a budget estimate.",
+      "expertise": "Procurement, cash planning, and refundable deposits.",
+      "blindSpot": "Can price a towel but struggles to price wonder.",
+      "challenge": "Is that a cost estimate or a prayer with decimal places?",
+      "fictional": true
+    }
+  ]
+}

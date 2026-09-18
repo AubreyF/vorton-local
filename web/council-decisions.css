@@ -1,0 +1,38 @@
+.vorton-workspace .council-decisions { margin: 36px 0; padding: clamp(18px,3vw,32px); border: 1px solid var(--aub-border); border-radius: var(--aub-card-radius); background: var(--aub-card); scroll-margin-top: 100px; }
+.vorton-workspace .decision-queue-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.vorton-workspace .decision-queue-eyebrow { display: block; text-transform: uppercase; letter-spacing: .13em; font-size: .68rem; color: var(--aub-text-mid); margin-bottom: 10px; }
+.vorton-workspace .decision-queue-heading h2 { font-size: 2rem; margin-bottom: 12px; }
+.vorton-workspace .decision-queue-count { display: grid; place-items: center; width: 54px; height: 54px; border: 1px solid var(--aub-text-mid); border-radius: 50%; font: 400 1.8rem var(--aub-font-display); }
+.vorton-workspace .decision-queue-description { max-width: 75ch; font-size: .88rem; line-height: 1.6; }
+.vorton-workspace .decision-queue-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 18px; }
+.vorton-workspace .decision-queue-tabs button { display: flex; align-items: center; gap: 15px; font-size: .85rem; }
+.vorton-workspace .decision-queue-tabs button[aria-pressed="true"] { background: var(--aub-logo-background); color: var(--aub-logo-text); border-color: transparent; }
+.vorton-workspace .decision-queue-tabs button > span { opacity: .8; font-size: .7rem; }
+.vorton-workspace .decision-queue-empty { padding: 24px 0 10px; }
+.vorton-workspace .decision-queue-card { background: var(--aub-card-solid); box-shadow: none; padding: 24px; margin: 20px 0 0; }
+.vorton-workspace .decision-queue-card h3 { font-size: 1.35rem; margin: 5px 0 0; }
+.vorton-workspace .decision-queue-card .record-heading p { font-size: .72rem; }
+.vorton-workspace .decision-origin { font-size: .72rem; margin: 8px 0 15px; }
+.vorton-workspace .decision-origin a { color: var(--aub-text-mid); }
+.vorton-workspace .decision-queue-card > .prose { font-size: .9rem; line-height: 1.65; }
+.vorton-workspace .decision-support > summary { padding: 6px 0; font-size: .8rem; }
+.vorton-workspace .decision-support .goal-columns { margin-top: 18px; }
+.vorton-workspace .decision-support dt { font-size: .8rem; color: var(--aub-text-mid); margin-top: 10px; }
+.vorton-workspace .decision-support dd { margin: 4px 0 12px; overflow-wrap: anywhere; }
+.vorton-workspace .decision-queue-card .actions { margin-top: 18px; }
+.vorton-workspace .decision-queue-card .actions button { font-size: .8rem; }
+.vorton-workspace .decision-conflict { border-left: 3px solid var(--aub-amber); padding: 9px 14px; font-size: .8rem; line-height: 1.6; margin-top: 18px; }
+.vorton-workspace .decision-result { display: inline-block; margin-top: 18px; }
+.vorton-workspace .council-queue-jump { display: flex; align-items: center; justify-content: space-between; gap: 18px; color: var(--aub-text); text-decoration: none; padding: 16px 20px; margin: -12px 0 28px; border: 1px solid var(--aub-border); border-radius: var(--aub-control-radius); background: var(--aub-card); }
+.vorton-workspace .council-queue-jump > span { display: grid; gap: 5px; }
+.vorton-workspace .council-queue-jump strong { font-size: .9rem; }
+.vorton-workspace .council-queue-jump small { color: var(--aub-text-mid); font-size: .72rem; }
+.vorton-workspace .council-queue-jump:hover { background: var(--aub-control-hover); }
+@media (max-width: 760px) {
+  .vorton-workspace .decision-queue-card { padding: 18px; }
+  .vorton-workspace .decision-queue-card .actions { gap: 8px; }
+  .vorton-workspace .decision-queue-card .actions button { padding: 9px 11px; }
+  .vorton-workspace .decision-queue-tabs { gap: 5px; }
+  .vorton-workspace .decision-queue-tabs button { gap: 8px; padding: 9px 11px; font-size: .76rem; }
+}
+@media (forced-colors: active) { .vorton-workspace .decision-queue-tabs button[aria-pressed="true"] { outline: 2px solid Highlight; } }

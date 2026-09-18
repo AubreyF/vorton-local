@@ -1,0 +1,79 @@
+/* Derived from AubOS app/aubos-surfaces.css loading-state: 40px ring, 900ms rotation. */
+.aub-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: max(180px, calc(100dvh - var(--aub-loading-inset, 0px)));
+  width: 100%;
+  padding: clamp(24px, 6vw, 64px);
+  box-sizing: border-box;
+  text-align: center;
+  color: var(--aubos-text, var(--aub-text, currentColor));
+}
+.aub-loading--compact {
+  min-height: 180px;
+  padding: 24px;
+}
+.aub-loading__spinner {
+  display: block;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  border: 2px solid var(--aubos-border, var(--aub-border, currentColor));
+  border-top-color: var(--aubos-accent, var(--aub-accent, currentColor));
+  border-radius: 50%;
+  animation: aub-loading-spin 900ms linear infinite;
+}
+.aub-loading .aub-loading__label {
+  margin: 0;
+  font: inherit;
+  font-weight: 600;
+}
+.aub-loading .aub-loading__detail {
+  margin: 0;
+  color: var(--aubos-text-muted, var(--aub-muted, currentColor));
+  font-size: 0.875rem;
+}
+.aub-loading .aub-loading__progress {
+  appearance: none;
+  width: min(200px, 100%);
+  height: 6px;
+  margin: 0;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--aubos-border, var(--aub-border, GrayText));
+  color: var(--aubos-accent, var(--aub-accent, Highlight));
+}
+.aub-loading__progress::-webkit-progress-bar {
+  background: var(--aubos-border, var(--aub-border, GrayText));
+}
+.aub-loading__progress::-webkit-progress-value {
+  background: var(--aubos-accent, var(--aub-accent, Highlight));
+}
+.aub-loading__progress::-moz-progress-bar {
+  background: var(--aubos-accent, var(--aub-accent, Highlight));
+}
+@keyframes aub-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aub-loading__spinner {
+    animation: none;
+  }
+}
+@media (forced-colors: active) {
+  .aub-loading__spinner {
+    border-color: CanvasText;
+    border-top-color: Highlight;
+    forced-color-adjust: none;
+  }
+  .aub-loading__progress {
+    forced-color-adjust: auto;
+  }
+}

@@ -1,59 +1,32 @@
-# Vorton Local
+# Vorton
 
-Vorton Local gives a person and their AI team a shared place to set goals, organize work, make recommendations, and see what happened. It runs on a machine you control, with files you can inspect and keep.
+Vorton is a local workspace for turning Council recommendations into Goals and Tasks you can inspect, accept, and track. The flagship demonstration is **The Last Resort**, a hotel at the edge of the universe. Checkout is at eleven. Causality is subject to availability.
 
-The first two installations are **AubOS**, for personal life, and **FreedOS**, for the team building Freed. They share an application and design system while keeping their records, instructions, and execution boundaries separate.
+The demo includes three Goals, five Tasks, four fictional staff members, a Council briefing, and a recommendation awaiting your decision. Its people, evidence, incidents, and figures are invented. Accepting a recommendation creates a local planning record; it does not start an agent or perform external work.
 
-## Useful sooner
+## Run locally
 
-[Vorton Cloud](https://github.com/AubreyF/vorton-cloud) pursues the larger vision: a reusable foundation for people and AI-native organizations, with governed action, durable memory, independently deployable modules, and multiple installations.
+Use Node.js 22.13 or newer and npm.
 
-That vision is worth pursuing. It also requires a substantial platform before many of its benefits become available.
+```sh
+npm ci
+npm run check
+npm run demo:seed
+npm run demo
+```
 
-Vorton Local takes the pieces that can improve daily life now and gives them a smaller home. Goals should help a team choose useful work today. Executive recommendations should reach a person who can evaluate them. A software factory should complete a bounded task, show its evidence, and stop when it needs judgment.
+Open `http://127.0.0.1:47840/lastresort/bridge`. The server listens on loopback. Set `VORTON_DEMO_PORT` to use a different unreserved port. No API key, hosted database, account connection, or model runtime is needed.
 
-The long-term direction remains aligned with Vorton Cloud. Local is an independent implementation for an immediate, one-owner use case, not a claim that the cloud platform is complete or that switching between them is already supported.
+The seed command creates fictional records in `.runtime/last-resort`. It refuses to overwrite existing work. New stores otherwise start empty. The source fixtures are checked in; runtime mutations, exports, caches, and screenshots are not.
 
-## The first pilot
+Use Bridge for the operating picture, Council for recorded reasoning and pending decisions, Goals for outcomes and milestones, Tasks for work, and Hotel brief for the fictional organization. The upper-left menu contains six appearances and the installed Vorton version at its bottom.
 
-The first pilot includes:
+## Boundaries
 
-- Goals with success criteria, milestones, linked tasks, evidence, and a history of changes.
-- Executive review of existing work and recommendations for new goals and tasks.
-- One inbox for accepting, editing, deferring, or rejecting recommendations.
-- AubOS and FreedOS switching using the existing AubOS themes and controls.
-- Visible recommendation activity, startup checks, backup, and recovery.
+Repository work requires no quota verification or weekly allowance floor. Future quota controls belong in the Paseo scheduler.
 
-Factory execution and resource-aware scheduling are being developed separately in Paseo. This build does not implement a factory runner or a competing scheduler. FreedOS receives the shared goal, task, and executive-review surfaces; its execution integration follows that separate work.
+This is a one-owner local application. It is not a public multi-user service. Workspace selection scopes application records; it does not create an operating-system sandbox. Keep the local server behind your own access controls and do not expose it directly to the internet.
 
-**This is a tested local pilot, not a production cloud platform.** Start with `START-HERE.md` on the destination machine. Do not replace an authoritative installation until the handoff and destination checks pass.
+The portable source candidate contains no private installation adapter, personal records, agent scheduler, or Factory implementation. See [design provenance](web/design/SOURCE.md) for the origin of the shared visual vocabulary.
 
-## Small infrastructure
-
-The working directory is `~/dev/vorton` on both the development and destination machines. The repository name remains `vorton-local`; it does not dictate the folder name. The older cloud checkout lives separately at `~/dev/vortoncloud` on the development machine.
-
-The transfer ZIP is a small source package, not a complete installed AubOS image. It includes the local core, two empty installation directories, design tokens, tests, and setup instructions. It excludes dependencies, compiled assets, credentials, and the original AubOS application's code and personal records. The destination agent installs dependencies, builds the core, and attaches the destination's authoritative AubOS using `START-HERE.md`. Do not overwrite that application with a stale development copy.
-
-The pilot targets a single owner on macOS. It does not require Supabase, a hosted database, a new login platform, or cloud infrastructure. Private network access is supplied by the owner. The application must not be exposed directly to the public internet.
-
-Executive reviews use copyable prompts and validated JSON responses through an existing authenticated agent. This pilot starts no model calls itself. No API key is bundled or required by the application. An agent provider may still process the evidence explicitly supplied to it; local storage does not mean all model processing occurs on the host.
-
-Advanced memory, independently distributed plugins, remote worker fleets, and multi-owner hosting remain longer-term candidates. None is a prerequisite for the first pilot.
-
-## Your records stay yours
-
-Code and operational data have different homes. This repository contains source, documentation, and controlled fixtures. It must not contain personal records, generated personal dashboard bundles, credentials, provider sessions, private keys, or backups.
-
-The `AubOS` and `FreedOS` directories hold separate local state outside Git. An existing authoritative AubOS installation is preserved at the destination. A stale development copy must never overwrite it or silently become its replacement.
-
-Profile separation is not an operating-system sandbox. A coding worker needs a restricted execution environment that cannot read personal AubOS files or credentials. The application does not claim that a dropdown supplies that protection.
-
-## Judgment and action
-
-Recommendations are advisory. Accepting a goal or task does not authorize spending, outreach, deployment, or factory execution. No factory is implemented here. Automatic merging, deployment, destructive changes, and changes to execution permissions are outside the pilot's authority.
-
-Errors and incomplete work remain visible. A generated plan is not evidence that an action happened. A passing local test is not proof that another machine is ready.
-
-## Publication
-
-This repository is private during development. Public publication requires the owner's review and approval after source and history scans. A clean scan is supporting evidence, not a guarantee that every sensitive value has been recognized.
+Vorton is available under the [MIT license](LICENSE). This is an early preview; see [security](SECURITY.md), [versioning](docs/VERSIONING.md), and [release gates](docs/RELEASE.md).

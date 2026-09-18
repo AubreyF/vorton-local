@@ -1,9 +1,9 @@
 import { mkdir, readFile, open, rename, lstat, rmdir } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
+import { coreIdentities, loadCouncil } from "../modules/council/config.mjs";
 
-export const profiles = Object.freeze(["AubOS", "FreedOS"]);
-export const roles = Object.freeze(["CEO", "CTO", "CMO", "COO", "CFO"]);
+export const roles = Object.freeze(coreIdentities.map(x => x.id));
 export class Fault extends Error {
   constructor(status, message) {
     super(message);
@@ -133,7 +133,7 @@ export function taskInput(input) {
     ),
   };
 }
-export function recommendationInput(input) {
+export function recommendationInput(input, allowedRoles = roles) {
   fields(input, [
     "role",
     "kind",
@@ -157,7 +157,7 @@ export function recommendationInput(input) {
       "Review must bind the current target version",
     );
   return {
-    role: choose(input.role, roles, "executive role"),
+    role: choose(input.role, allowedRoles, "executive role"),
     kind,
     targetId: text(input.targetId ?? "", "target", 80, isReview),
     targetVersion: isReview ? input.targetVersion : null,
@@ -182,6 +182,7 @@ function initial(profile) {
     goals: [],
     tasks: [],
     recommendations: [],
+    councilSessions: [],
     events: [],
     requests: [],
   };
@@ -197,6 +198,7 @@ function validateState(s, profile) {
   );
   for (const key of ["goals", "tasks", "recommendations", "events", "requests"])
     check(Array.isArray(s[key]), "State is invalid", 503);
+  check(s.councilSessions === undefined || Array.isArray(s.councilSessions), "Council sessions are invalid", 503);
   return s;
 }
 export async function safeDirectory(directory) {
@@ -227,11 +229,12 @@ export async function atomicJson(filename, value) {
   }
 }
 export class Store {
-  constructor(root) {
+  constructor(root, allowedProfiles = null) {
     this.root = path.resolve(root);
+    this.allowedProfiles = allowedProfiles;
   }
   async directory(profile) {
-    check(profiles.includes(profile), "Unknown installation", 404);
+    check(typeof profile === "string" && /^[A-Za-z][A-Za-z0-9_-]{0,63}$/.test(profile) && (!this.allowedProfiles || this.allowedProfiles.includes(profile)), "Unknown installation", 404);
     await safeDirectory(this.root);
     await safeDirectory(path.join(this.root, profile));
     const directory = path.join(this.root, profile, "state");
@@ -247,12 +250,12 @@ export class Store {
         "State file must not be a symlink",
         503,
       );
-      return validateState(
+      return { ...validateState(
         JSON.parse(await readFile(filename, "utf8")),
         profile,
-      );
+      ), council: await loadCouncil(path.join(this.root, profile), profile) };
     } catch (error) {
-      if (error.code === "ENOENT") return initial(profile);
+      if (error.code === "ENOENT") return { ...initial(profile), council: await loadCouncil(path.join(this.root, profile), profile) };
       if (error instanceof SyntaxError)
         throw new Fault(
           503,
@@ -309,6 +312,7 @@ export class Store {
         detail: result?.detail ?? "",
       });
       state.requests.push({ id: command.requestId, command: serialized });
+      check(JSON.stringify(state.council) === JSON.stringify(await loadCouncil(path.join(this.root, profile), profile)), "Council configuration changed during publication. Refresh before saving.", 409);
       // Keep idempotence for the life of the store. Never silently evict identity history.
       await atomicJson(path.join(directory, "core.json"), state);
       return state;
@@ -389,7 +393,7 @@ export function applyCommand(state, command) {
       action.endsWith("update") ? text(payload.id, "task ID", 80) : "",
     );
   if (action === "recommendation.create") {
-    const data = recommendationInput(payload);
+    const data = recommendationInput(payload, state.council?.identities.map(x => x.id) ?? roles);
     relations(
       state,
       data.proposal,

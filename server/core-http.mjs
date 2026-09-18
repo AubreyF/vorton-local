@@ -1,4 +1,5 @@
 import http from "node:http";
+import { Readable } from "node:stream";
 import { canonicalWorkspacePath } from "./workspace-routes.mjs";
 import { readFile, realpath } from "node:fs/promises";
 import path from "node:path";
@@ -7,7 +8,7 @@ import { Store, check, Fault } from "./store.mjs";
 import { councilPacket, publishCouncil } from "./council.mjs";
 import { reviewPacket, importRecommendations } from "./review.mjs";
 import { installedVersion } from "./version.mjs";
-import { assetCacheControl } from "./asset-delivery.mjs";
+import { pipeAssetResponse } from "./asset-delivery.mjs";
 
 const mime = {
   ".html": "text/html; charset=utf-8",
@@ -217,12 +218,15 @@ export function createCoreServer({
         if (error instanceof Fault) throw error;
         throw new Fault(404, "Application asset not found. Run npm run build.");
       }
-      res.writeHead(200, {
-        "Content-Type":
+      // Local files use the same encoding and confidentiality policy as the
+      // proxied application. HEAD keeps metadata without sending a body.
+      const incoming = Readable.from(req.method === "HEAD" ? [] : [data]);
+      incoming.statusCode = 200;
+      pipeAssetResponse(req, res, incoming, {
+        "content-type":
           mime[path.extname(target)] ?? "application/octet-stream",
-        "Cache-Control": assetCacheControl(url.pathname, req.method, 200, null),
-      });
-      res.end(req.method === "HEAD" ? undefined : data);
+        "content-length": data.length,
+      }, url.pathname, null);
     } catch (error) {
       if (!res.headersSent)
         json(res, error instanceof Fault ? error.status : 500, {

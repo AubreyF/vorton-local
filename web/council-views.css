@@ -42,7 +42,7 @@
 .vorton-workspace .council-attribution { font-size: .75rem; margin: 20px 0 26px; line-height: 1.6; color: var(--aub-text-dim); }
 .vorton-workspace .council-evidence { scroll-margin-top: 100px; }
 .vorton-workspace #council-timeline, .vorton-workspace #council-roundtable, .vorton-workspace .council-view-stage > [id] { scroll-margin-top: 110px; }
-.vorton-workspace .council-session-preview { overflow-wrap: anywhere; line-height: 1.5; max-width: 65ch; margin: 12px 0; }
+.vorton-workspace .council-session-preview { display: -webkit-box; -webkit-line-clamp: 10; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; line-height: 1.5; max-width: 65ch; margin: 12px 0; }
 .vorton-workspace .panel.council-session { padding-bottom: 18px; }
 .vorton-workspace .council-session-preview ul { display: grid; gap: 10px; padding-left: 20px; margin: 10px 0; }
 .vorton-workspace .council-session-preview li .badge { margin-left: 10px; white-space: nowrap; }
@@ -57,7 +57,7 @@
    section-navigator.tsx; rail treatment adapted from app/aubos-surfaces.css for
    the portable workspace, where that application stylesheet is not loaded. */
 .vorton-workspace .council-page-navigation .section-navigator-layout { display: grid; grid-template-columns: minmax(0,1fr); }
-.vorton-workspace .council-page-navigation .section-navigator-content { grid-area: 1 / 1; width: min(100%,calc(100vw - 408px)); min-width: 0; margin: 0 auto; }
+.vorton-workspace .council-page-navigation .section-navigator-content { grid-area: 1 / 1; width: calc(100% - max(0px,204px - (100vw - 100%) / 2)); min-width: 0; margin: 0 0 0 auto; }
 /* The rail starts below the full-width timeline and then sticks while its
    content scrolls. Sharing one grid cell preserves the existing content width. */
 .vorton-workspace .council-page-navigation .section-navigator-rail { grid-area: 1 / 1; align-self: start; position: sticky; z-index: 11; top: calc(var(--navigation-height,64px) + 28px); left: auto; margin-top: 240px; margin-left: calc((100% - 100vw) / 2 + 8px); display: flex; width: 176px; height: auto; align-items: stretch; justify-content: flex-start; flex-direction: column; gap: 2px; padding: 8px 0 18px; max-height: calc(100dvh - 120px); overflow-x: hidden; overflow-y: auto; }
@@ -85,8 +85,9 @@
 .vorton-workspace .roundtable-layout { position: relative; height: var(--table-height); border: 0; background: transparent; overflow: hidden; }
 .vorton-workspace .council-table { position: absolute; left: var(--table-center-x); top: var(--table-center-y); width: var(--council-table-width); height: var(--council-table-height); transform: translate(-50%,-50%); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 1px solid var(--aub-accent); border-radius: 50%; background: radial-gradient(ellipse at center, var(--aub-card-solid) 16%, transparent 65%), radial-gradient(ellipse at 30% 25%, var(--aub-accent-soft), transparent 65%), var(--aub-card-solid); box-shadow: 0 0 65px var(--aub-accent-soft); }
 .vorton-workspace .council-table > * { position: relative; z-index: 1; }
-/* Every orbital curve stays inside the same compact oval boundary. */
-.vorton-workspace .council-table > .council-orbits { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; color: var(--aub-accent); opacity: .55; pointer-events: none; }
+/* Crossing orbits extend beyond the main oval; the full assembly is sized
+   against the portrait orbit in Roundtable, so its outside curves stay clear. */
+.vorton-workspace .council-table > .council-orbits { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 0; color: var(--aub-accent); opacity: .55; pointer-events: none; }
 .vorton-workspace .council-table > strong { font: 500 1.25rem var(--aub-font-display); }
 .vorton-workspace .council-table > span { color: var(--aub-text-mid); font-size: .78rem; margin-top: 8px; }
 .vorton-workspace .council-table .table-instruction { line-height: 1.6; padding-top: 18px; }
@@ -141,12 +142,12 @@
   .vorton-workspace .session-record-link { white-space: normal; min-width: 72px; font-size: .7rem; }
   .vorton-workspace .council-evidence > summary > span:last-child { float: none; display: block; margin-top: 8px; }
   .vorton-workspace .roundtable-layout { height: auto; padding: 12px 14px; }
-  .vorton-workspace .council-table { position: relative; inset: auto; transform: none; width: 184px; height: 184px; margin: 4px auto 24px; }
+  .vorton-workspace .council-table { position: relative; inset: auto; transform: none; width: 220px; height: 220px; margin: 4px auto 24px; }
   .vorton-workspace .council-table .table-instruction { display: none; }
   .vorton-workspace .roundtable-seats { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 26px 12px; }
   .vorton-workspace .council-seat { position: relative; inset: auto; transform: none; width: 100%; }
   .vorton-workspace .roundtable-layout[data-large-roster] { padding: 20px 14px; }
-  .vorton-workspace .roundtable-layout[data-large-roster] .council-table { width: 184px; height: 184px; }
+  .vorton-workspace .roundtable-layout[data-large-roster] .council-table { width: 220px; height: 220px; }
   .vorton-workspace .roundtable-layout[data-large-roster] .roundtable-seats { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 26px 12px; }
   .vorton-workspace .seat-bubble { padding: 12px; flex: 1; }
   .vorton-workspace .seat-bubble .submission-preview { -webkit-line-clamp: 3; font-size: .75rem; }

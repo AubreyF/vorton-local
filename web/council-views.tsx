@@ -7,7 +7,7 @@ import { SessionTimeline } from "./council-timeline";
 
 type Session = NonNullable<State["councilSessions"]>[number];
 type OpenSubmission = { voice: CouncilVoice; anchor: HTMLButtonElement; closing?: boolean };
-const tableGeometry = { centerX: 50, centerY: 44, radiusX: 37, radiusY: 36, portraitDiameter: 86, clearance: 84, maxTableScale: .62 };
+const tableGeometry = { centerX: 50, centerY: 44, radiusX: 37, radiusY: 36, portraitDiameter: 86, clearance: 64, maxTableScale: .62, orbitExtent: 1.24 };
 
 const shortDate = (date: string) => new Date(date).toLocaleDateString(undefined, { month: "short", day: "numeric" });
 const fullDate = (date: string) => new Date(date).toLocaleString(undefined, { dateStyle: "full", timeStyle: "short" });
@@ -28,9 +28,9 @@ function Roundtable({ voices, session, onOpen, expandedId }: { voices: CouncilVo
       const smallerRadius = Math.min(element.clientWidth * tableGeometry.radiusX / 100, element.clientHeight * tableGeometry.radiusY / 100);
       if (smallerRadius <= 0) return;
       const inset = tableGeometry.portraitDiameter / 2 + tableGeometry.clearance;
-      // Keep the decoration compact even on wide displays. One scale preserves
-      // the portraits' oval aspect ratio while leaving a generous inner gutter.
-      setTableScale(Math.max(.1, Math.min(tableGeometry.maxTableScale, 1 - inset / smallerRadius)));
+      // Size the complete Orrery by its outermost orbital curve. The crossing
+      // orbits extend beyond the main oval while all curves clear the portraits.
+      setTableScale(Math.max(.1, Math.min(tableGeometry.maxTableScale, (1 - inset / smallerRadius) / tableGeometry.orbitExtent)));
     };
     update();
     const observer = new ResizeObserver(update);
@@ -48,7 +48,7 @@ function Roundtable({ voices, session, onOpen, expandedId }: { voices: CouncilVo
     "--council-table-height": `${2 * tableGeometry.radiusY * tableScale}%`,
   } as CSSProperties;
   return <section ref={layout} className="roundtable-layout" data-table-treatment="orrery" data-large-roster={voices.length > 10 ? "true" : undefined} aria-label="Circular council" style={geometry}>
-    <div className="council-table" aria-hidden="true"><svg className="council-orbits" viewBox="-100 -100 200 200" preserveAspectRatio="none" fill="none" stroke="currentColor"><ellipse rx="94" ry="94" vectorEffect="non-scaling-stroke"/><ellipse rx="86" ry="32" transform="rotate(28)" vectorEffect="non-scaling-stroke"/><ellipse rx="86" ry="32" transform="rotate(-28)" vectorEffect="non-scaling-stroke"/></svg><strong>{shortDate(session.publishedAt)}</strong><span className="table-instruction">Choose a voice<br/>to hear their thinking</span></div>
+    <div className="council-table" aria-hidden="true"><svg className="council-orbits" viewBox="-100 -100 200 200" preserveAspectRatio="none" fill="none" stroke="currentColor"><ellipse rx="94" ry="94" vectorEffect="non-scaling-stroke"/><ellipse rx="124" ry="72" transform="rotate(28)" vectorEffect="non-scaling-stroke"/><ellipse rx="124" ry="72" transform="rotate(-28)" vectorEffect="non-scaling-stroke"/></svg><strong>{shortDate(session.publishedAt)}</strong><span className="table-instruction">Choose a voice<br/>to hear their thinking</span></div>
     <div className="roundtable-seats">{voices.map((voice,index)=> {
       const angle = -Math.PI/2 + index * 2*Math.PI / voices.length;
       // These coordinates locate the portrait center, independent of text height.

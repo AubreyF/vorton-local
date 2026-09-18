@@ -10,8 +10,10 @@ Preserve the six theme identities, semantic tokens, typography, keyboard control
 
 The Last Resort additions, September 18, 2026:
 
+- The reviewed application header, installation switcher, theme controls, interface zoom, background atmosphere, menu selection spacing, and shell stylesheet now live here as shared primitives. Native design-system files re-export them; they no longer maintain a second implementation. `workspace-navigation.tsx` extracts the existing native workspace navigation unchanged in behavior. Theme registry and theme CSS are shared by both entry points.
+- `fonts.css` and the selected `fonts/*.woff2` assets reuse the six families already shipped by the native application. Files are unmodified; family-specific SIL Open Font License notices are retained alongside them. The font software remains under those licenses, independent of the application's MIT license. No font request goes to a third-party service at runtime.
 - `web/design/section-navigator.tsx`: selected source `dashboard/web/app/design-system/section-navigator.tsx`, SHA-256 `468cb79babc2deb2fd2f65a5348d0ba974bbc124f225283c5e0611bf8c71ddab`. Contains generic scrolling and section links, with no private records or installation adapters.
-- `web/main.tsx` and `web/demo-shell.css` adapt the reviewed installation-switcher interaction and header geometry: a 44px trigger, explicit menu outline, outside-click dismissal, Escape returning focus, and horizontally scrollable navigation. The palette remains the reviewed theme tokens. No personal application directory was copied.
+- `web/main.tsx` composes the shared header and navigation directly. It does not implement separate menu controls or an organization-specific appearance preference. No personal application directory was copied.
 - `web/installed-version.tsx` is an original shared control placed after all other menu contents. It reads the running server's version and reports unavailable telemetry honestly.
 - `demo/last-resort` contains original fictional writing created for the owner's requested flagship. Council portraits use the existing deterministic inline SVG component. No external images or private records are included.
 

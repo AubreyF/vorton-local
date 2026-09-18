@@ -1,0 +1,78 @@
+/* Keep the consolidated layout with the component on every viewport. */
+.menu:global(.installation-links) {
+  border: 1px solid var(--aub-border);
+  width: min(340px, calc(100vw - 32px));
+  max-height: calc(100dvh - 100px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.menu :global(.installation-page-controls) {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.menu :global(.appearance-button) {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 10px;
+  box-sizing: border-box;
+  min-height: 44px;
+}
+
+.menu :global(.export-button)::after {
+  content: "Export page";
+  font: 500 14px/20px var(--aub-font-body);
+  color: var(--ink);
+}
+
+.menu :global(.appearance-tooltip) {
+  display: none;
+}
+
+.menu :global(.appearance-menu) {
+  position: static;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  box-sizing: border-box;
+  margin: 4px 0 8px;
+  box-shadow: none;
+}
+
+.menu :global(.appearance-inline-group) {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.menu :global(.appearance-inline-group) + :global(.export-control-shell) {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.menu :global(.appearance-inline-group) :global(.appearance-menu) {
+  margin: 0;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+}
+
+.menu :global(.appearance-theme-options) {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.menu :global(.theme-preview-button-compact),
+.menu :global(.theme-preview-button-surface) {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.menu :global(.interface-zoom-section) {
+  border-top: 0;
+}

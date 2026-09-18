@@ -38,20 +38,12 @@ function SessionEvidence({state, session}: {state: State; session: NonNullable<S
     const contentId = useId();
     const recommendations = state.recommendations.filter(r => session.recommendationIds.includes(r.id));
     const displaySummary = session.summary.replace(/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/g, id => state.goals.find(g=>g.id===id)?.title ?? state.tasks.find(t=>t.id===id)?.title ?? state.recommendations.find(r=>r.id===id)?.proposal.title ?? `…${id.slice(-8)}`);
-    // Use recorded actions for the overview, keeping the complete receipt below.
+    // Preview the saved report without inventing another account of the session.
     const preview = displaySummary.replace(/^\(AI Generated\)\.\s*/, "").replace(/^#{1,6}\s+/gm, "").replace(/\*\*|__/g, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\s+/g, " ").trim();
     const counts = ["pending", "accepted", "deferred", "rejected"].map(status => ({status, count: recommendations.filter(r=>r.status===status).length})).filter(x=>x.count);
-    const excerpt = (text: string, limit: number) => {
-      const words = text.trim().split(/\s+/);
-      return words.slice(0, limit).join(" ") + (words.length > limit ? "…" : "");
-    };
-    const actions = recommendations.filter(r => r.status === "pending" || r.status === "accepted").slice(0, 2);
     return <article className="panel council-session">
       <header className="record-heading"><div><p className="session-eyebrow">Council session</p><h3><time dateTime={session.publishedAt}>{new Date(session.publishedAt).toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"})}</time></h3></div><span className="badge">{session.status}</span></header>
-      <div className="council-session-preview">
-        {actions.length ? <><span className="council-kicker">Next decisions</span><ul>{actions.map(r => <li key={r.id}><a href={`/${state.profile.toLowerCase()}/council#recommendation-${r.id}`}>{excerpt(r.proposal.title, 16)}</a><span className="badge">{r.status === "pending" ? "Needs review" : "Accepted"}</span></li>)}</ul></> : <><span className="council-kicker">Session focus</span><p>{excerpt(preview, Math.min(48, Math.max(1, Math.floor(preview.split(/\s+/).length / 2)))) || "No report text was saved for this session."}</p></>}
-        {session.options?.length ? <p className="session-preview-context">{session.options.length} alternatives considered. {recommendations.length} recorded recommendations.</p> : null}
-      </div>
+      {!expanded && <p className="council-session-preview">{preview || "No report text was saved for this session."}</p>}
       <div id={contentId} className="council-report-accordion" data-expanded={expanded} inert={!expanded} aria-hidden={!expanded}><div className="council-report-accordion-inner">
       {recommendations.length > 0 && <figure className="decision-chart"><figcaption>Recommendations now · {recommendations.length.toLocaleString()} total</figcaption><div className="decision-bar" aria-hidden="true">{counts.map(x=><span className={`decision-segment ${x.status}`} style={{flex:x.count}} key={x.status}/>)}</div><ul className="decision-legend">{counts.map(x=><li key={x.status}>{x.count.toLocaleString()} {x.status}</li>)}</ul></figure>}
       {recommendations.length > 0 && <section className="session-actions"><h4>Actions from this session</h4><ol>{recommendations.map(r=><li key={r.id}><a href={`/${state.profile.toLowerCase()}/council#recommendation-${r.id}`}>{r.proposal.title}</a><span>{session.council?.identities.find(x=>x.id===r.role)?.name ?? r.role} · {r.proposal.owner} · {r.status}{"dueOn" in r.proposal && r.proposal.dueOn ? ` · Due ${r.proposal.dueOn}` : ""}</span></li>)}</ol></section>}

@@ -4,6 +4,8 @@ import { mkdtemp, mkdir, writeFile, symlink, rm } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
+import http from "node:http";
+import { brotliDecompressSync, gunzipSync } from "node:zlib";
 import { createCoreServer } from "../server/core-http.mjs";
 
 async function fixture(t) {
@@ -51,4 +53,39 @@ test("portable assets reject symlink escapes and only fingerprinted assets recei
   const head=await fetch(`${base}/demo-assets/app-12345678.js`,{method:"HEAD"});
   assert.equal(head.status,200);
   assert.equal(await head.text(),"");
+});
+
+test("portable production assets negotiate compression without caching private responses", async t => {
+  const {root,base}=await fixture(t);
+  const body=Buffer.from("export const fixture = '"+"portable asset ".repeat(1000)+"';");
+  await mkdir(path.join(root,"dist/demo-assets"),{recursive:true});
+  await writeFile(path.join(root,"dist/demo-assets/app-12345678.js"),body);
+  const request=(route,encoding,method="GET")=>new Promise((resolve,reject)=>{
+    const req=http.request(base+route,{method,headers:{"Accept-Encoding":encoding}},res=>{
+      const chunks=[];res.on("data",chunk=>chunks.push(chunk));
+      res.on("end",()=>resolve({status:res.statusCode,headers:res.headers,body:Buffer.concat(chunks)}));
+      res.on("error",reject);
+    });
+    req.on("error",reject);req.end();
+  });
+  for(const encoding of ["br","gzip"]) {
+    const result=await request("/demo-assets/app-12345678.js",encoding);
+    assert.equal(result.status,200);
+    assert.equal(result.headers["content-encoding"],encoding);
+    assert.match(result.headers["cache-control"],/private.*immutable/);
+    assert.match(result.headers.vary,/Accept-Encoding/);
+    assert.ok(result.body.length<body.length);
+    assert.deepEqual(encoding==="br"?brotliDecompressSync(result.body):gunzipSync(result.body),body);
+  }
+  const plain=await request("/demo-assets/app-12345678.js","br;q=0,gzip;q=0");
+  assert.equal(plain.headers["content-encoding"],undefined);
+  assert.deepEqual(plain.body,body);
+  const head=await request("/demo-assets/app-12345678.js","br","HEAD");
+  assert.equal(head.body.length,0);
+  assert.equal(Number(head.headers["content-length"]),body.length);
+  for(const route of ["/api/lastresort/state","/demo-assets/missing-12345678.js","/api/aubos/state"]) {
+    const result=await request(route,"br");
+    assert.equal(result.status,route==="/api/lastresort/state"?200:404);
+    assert.equal(result.headers["cache-control"],"no-store");
+  }
 });

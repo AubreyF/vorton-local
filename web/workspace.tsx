@@ -1,5 +1,6 @@
 "use client";
 import "./workspace.css";
+import { OperationsOverview, OrganizationOverview } from "./workspace-overview";
 import { CouncilDecisions } from "./council-decisions";
 import { LoadingIndicator } from "./loading-indicator";
 // Selected reviewed component; provenance is recorded in design/SOURCE.md.
@@ -36,6 +37,7 @@ const councilSections = [
 ];
 
 const pages = [
+  { id: "guestbook", label: "Organization" },
   { id: "bridge", label: "Bridge" },
   { id: "council", label: "Council" },
   { id: "recommendations", label: "Recommendations" },
@@ -130,6 +132,12 @@ export function WorkspaceApp({
     });
     return () => controller.abort();
   }, []);
+  useEffect(() => {
+    if (!state || !['goals', 'tasks'].includes(page)) return;
+    // Records arrive after the browser's initial fragment navigation.
+    const target = document.getElementById(location.hash.slice(1));
+    target?.scrollIntoView({block: 'center'});
+  }, [Boolean(state), page]);
   async function command(action: string, payload: unknown) {
     if (!state || busy) return;
     setBusy(true);
@@ -199,6 +207,7 @@ export function WorkspaceApp({
           })
         ) : (
           <>
+            {page === "guestbook" && <OrganizationOverview state={state}/>}
             {page === "goals" && (
               <Goals
                 state={state}
@@ -543,7 +552,7 @@ function Tasks({
       ) : (
         <div className="panel task-list">
           {tasks.map((t) => (
-            <article key={t.id} className="task-row">
+            <article key={t.id} id={`task-${t.id}`} className="task-row">
               <div>
                 <span className={`badge ${t.status}`}>{pretty(t.status)}</span>
                 <h2>
@@ -592,7 +601,40 @@ function Command({
   const [packet, setPacket] = useState("");
   const [importText, setImportText] = useState("");
   const [notice, setNotice] = useState("");
+  const councilPage = useRef<HTMLDivElement>(null);
   const identities = state.council?.identities ?? [];
+  useEffect(() => {
+    const page = councilPage.current;
+    if (view !== "council" || !page) return;
+    let appliedHash = "";
+    let frame = 0;
+    const followSectionHash = () => {
+      const hash = location.hash;
+      const id = hash.slice(1);
+      if (hash === appliedHash || !(councilSections.some(section => section.id === id) || id.startsWith('recommendation-'))) return;
+      // The report and timeline arrive through a lazy module. Wait for that
+      // content before positioning any section below it, including Review.
+      if (!page.querySelector("#council-timeline")) return;
+      const target = document.getElementById(id);
+      if (!target || !page.contains(target)) return;
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (location.hash !== hash || !target.isConnected) return;
+        target.scrollIntoView({ block: "start", behavior: "instant" });
+        appliedHash = hash;
+      });
+    };
+    const onHashChange = () => { appliedHash = ""; followSectionHash(); };
+    const observer = new MutationObserver(followSectionHash);
+    observer.observe(page, { childList: true, subtree: true });
+    window.addEventListener("hashchange", onHashChange);
+    followSectionHash();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("hashchange", onHashChange);
+      cancelAnimationFrame(frame);
+    };
+  }, [view, state.profile]);
   useEffect(() => {
     // A saved change invalidates the evidence revision in an earlier packet.
     setPacket("");
@@ -640,58 +682,12 @@ function Command({
               : "The objective, the work, and what needs your attention."
         }
       />
-      {view === "bridge" && (
-        <>
-          <Suspense fallback={<LoadingIndicator label="Loading council briefing" />}><RoundtableBriefing state={state} /></Suspense>
-          <section id="briefing" className="panel">
-            <h2>Bridge</h2>
-            {state.goals
-              .filter((g) => !g.parentId && g.status === "active")
-              .map((goal) => (
-                <div key={goal.id} className="prose">
-                  <h3>
-                    <a href={`/${state.profile.toLowerCase()}/goals#goal-${goal.id}`}>
-                      {goal.title}
-                    </a>
-                  </h3>
-                  <p>{goal.intent}</p>
-                </div>
-              ))}
-            <div className="brief-grid">
-              <div>
-                <strong>
-                  {state.goals.filter((g) => g.status === "active").length}
-                </strong>
-                <span>Active goals</span>
-              </div>
-              <div>
-                <strong>
-                  {
-                    state.tasks.filter(
-                      (t) => !["done", "cancelled"].includes(t.status),
-                    ).length
-                  }
-                </strong>
-                <span>Open tasks</span>
-              </div>
-              <div>
-                <strong>{pending.length}</strong>
-                <span>Recommendations to review</span>
-              </div>
-            </div>
-            <p>
-              These counts come from {state.profile}'s local goal and task
-              records. Other installations are excluded.
-            </p>
-          </section>
-          <p className="briefing-actions">
-            <a href={`/${state.profile.toLowerCase()}/council`}>Read the latest council session</a>
-            <a href={`/${state.profile.toLowerCase()}/council#recommendations`}>Review recommendations</a>
-          </p>
-        </>
-      )}
+      {view === "bridge" && <>
+        <OperationsOverview state={state}/>
+        <Suspense fallback={<LoadingIndicator label="Loading council briefing"/>}><RoundtableBriefing state={state}/></Suspense>
+      </>}
       {view === "council" && (
-        <div className="council-page-navigation"><SectionNavigator label="Council page sections" pageWidth="contained" items={councilSections}>
+        <div ref={councilPage} className="council-page-navigation"><SectionNavigator label="Council page sections" pageWidth="contained" items={councilSections}>
           <Suspense fallback={<LoadingIndicator label="Loading council history" />}><CouncilHistory state={state} /></Suspense>
           <section id="council-goals" className="panel council-goals" aria-labelledby="council-goals-heading">
             <header className="record-heading"><h2 id="council-goals-heading">Goals</h2><a href={`/${state.profile.toLowerCase()}/goals`}>All goals ↗</a></header>

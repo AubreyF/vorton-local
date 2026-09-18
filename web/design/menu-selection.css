@@ -1,0 +1,39 @@
+/* Trade 2px of vertical padding for transparent border space on each side.
+   Adjacent highlights stay separate without changing row height or hit areas. */
+.topbar .installation-links .installation-option,
+.topbar .installation-links .installation-option:hover,
+.topbar .installation-links .installation-option:focus-visible {
+  padding-block: 6px;
+  border-block: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.appearance-menu .export-option,
+.appearance-menu .export-option:hover,
+.appearance-menu .export-option:focus-visible {
+  padding-block: 6px;
+  border-block: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+.installation-links .installation-page-controls .appearance-button {
+  padding-block: 8px;
+  border-block: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+.vorton-workspace .dropdown-panel > a,
+.vorton-workspace .dropdown-panel > a:hover,
+.vorton-workspace .dropdown-panel > a:focus-visible {
+  padding-block: 8px;
+  border-block: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.vorton-workspace .dropdown-panel > button,
+.vorton-workspace .dropdown-panel > button:hover,
+.vorton-workspace .dropdown-panel > button:focus-visible {
+  padding-block: 8px;
+  border-block: 3px solid transparent;
+  background-clip: padding-box;
+}

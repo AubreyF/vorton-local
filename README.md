@@ -19,7 +19,7 @@ Open `http://127.0.0.1:47840/lastresort/bridge`. The server listens on loopback.
 
 The seed command creates fictional records in `.runtime/last-resort`. It refuses to overwrite existing work. New stores otherwise start empty. The source fixtures are checked in; runtime mutations, exports, caches, and screenshots are not.
 
-Use Bridge for the operating picture, Council for recorded reasoning and pending decisions, Goals for outcomes and milestones, Tasks for work, and Hotel brief for the fictional organization. The upper-left menu contains six appearances and the installed Vorton version at its bottom.
+Use Bridge for active goals, blocked work, next steps, and pending decisions. Organization shows the Council roster and each person's current responsibilities. Goals and Tasks open the underlying records. The shared upper-left menu contains six appearances, interface zoom, and the installed Vorton version at its bottom. Appearance and zoom follow you between workspaces on the same origin.
 
 ## Boundaries
 

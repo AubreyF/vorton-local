@@ -1,0 +1,27 @@
+.vorton-workspace .operations-metrics { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; margin: 8px 0 32px; }
+.vorton-workspace .operations-metrics a { display: flex; flex-direction: column; gap: 6px; color: var(--aub-text-mid); text-decoration: none; }
+.vorton-workspace .operations-metrics strong { font: 500 clamp(2rem,4vw,3.5rem) var(--aub-font-display); color: var(--aub-accent); }
+.vorton-workspace .operations-columns { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap: 24px; align-items: start; }
+.vorton-workspace .operations-stack { min-width: 0; display: grid; gap: 24px; }
+.vorton-workspace .operations-overview .panel { margin: 0; }
+.vorton-workspace .operations-goals article + article { margin-top: 36px; }
+.vorton-workspace .operations-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.vorton-workspace .operations-row h2 { margin: 0; }
+.vorton-workspace .operations-progress { display: flex; gap: 12px; align-items: center; font-variant-numeric: tabular-nums; }
+.vorton-workspace .operations-progress progress { width: 100%; height: 7px; accent-color: var(--aub-accent); }
+.vorton-workspace .operations-next strong { display: block; color: var(--aub-text-dim); font-size: .75rem; margin-bottom: 5px; }
+.vorton-workspace .operations-tasks ul, .vorton-workspace .operations-decisions ul { list-style: none; padding: 0; display: grid; gap: 20px; }
+.vorton-workspace .operations-tasks h3 { margin: 8px 0; font-size: 1.1rem; }
+.vorton-workspace .operations-tasks p { margin: 0; font-size: .85rem; }
+.vorton-workspace .organization-roster { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
+.vorton-workspace .organization-overview .page-heading { display: block; }
+.vorton-workspace .organization-overview .page-heading p { max-width: 65ch; }
+.vorton-workspace .organization-roster .panel { margin: 0; }
+.vorton-workspace .organization-person { display: flex; align-items: center; gap: 16px; }
+.vorton-workspace .organization-person svg { flex-shrink: 0; }
+.vorton-workspace .organization-person h3, .vorton-workspace .organization-person p { margin: 4px 0; }
+.vorton-workspace .organization-roster li { margin-block: 12px; }
+@media(max-width:760px) {
+  .vorton-workspace .operations-columns, .vorton-workspace .organization-roster { grid-template-columns: minmax(0,1fr); }
+  .vorton-workspace .operations-metrics { gap: 12px; font-size: .85rem; }
+}

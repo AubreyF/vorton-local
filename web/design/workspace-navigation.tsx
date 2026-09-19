@@ -9,12 +9,14 @@ export function WorkspaceNavigation({profile,page,links,level='primary',controls
   useEffect(()=>{
     const nav=navigation.current;if(!nav)return;
     nav.querySelector<HTMLElement>('[aria-current="page"]')?.scrollIntoView({block:'nearest',inline:'center'});
-    const observer=new ResizeObserver(updateOverflow);observer.observe(nav);if(nav.firstElementChild)observer.observe(nav.firstElementChild);updateOverflow();return()=>observer.disconnect();
+    // Font and viewport changes can push the active section outside the rail.
+    const revealActive=()=>{nav.querySelector<HTMLElement>('[aria-current="page"]')?.scrollIntoView({block:'nearest',inline:'center'});updateOverflow();};
+    const observer=new ResizeObserver(revealActive);observer.observe(nav);if(nav.firstElementChild)observer.observe(nav.firstElementChild);updateOverflow();return()=>observer.disconnect();
   },[page,profile]);
   function scroll(direction:number){const nav=navigation.current;if(!nav)return;nav.scrollBy({left:direction*Math.max(120,nav.clientWidth*.7),behavior:'auto'});nav.focus({preventScroll:true});}
   return <div className={`view-nav-shell ${level}-nav-shell`}>
-    {overflow.left&&<button className="nav-scroll-control nav-scroll-left" aria-label="Scroll sections left" onClick={()=>scroll(-1)}><span aria-hidden="true">‹</span></button>}
+    {overflow.left&&<button type="button" className="nav-scroll-control nav-scroll-left" aria-label="Scroll sections left" onClick={()=>scroll(-1)}><span aria-hidden="true">‹</span></button>}
     <nav ref={navigation} tabIndex={-1} onScroll={updateOverflow} data-overflow-left={overflow.left?'true':undefined} data-overflow-right={overflow.right?'true':undefined} className={`view-nav ${level}-nav`} aria-label={`${profile} sections`}><div className={`view-nav-track ${level}-nav-track`}>{links.map(link=><a key={link.id} className={`nav-button ${level}-nav-link${link.id===page?' active':''}`} href={link.path} aria-current={link.id===page?'page':undefined} aria-controls={controls} onClick={link.onClick}>{link.label}</a>)}</div></nav>
-    {overflow.right&&<button className="nav-scroll-control nav-scroll-right" aria-label="Scroll sections right" onClick={()=>scroll(1)}><span aria-hidden="true">›</span></button>}
+    {overflow.right&&<button type="button" className="nav-scroll-control nav-scroll-right" aria-label="Scroll sections right" onClick={()=>scroll(1)}><span aria-hidden="true">›</span></button>}
   </div>;
 }

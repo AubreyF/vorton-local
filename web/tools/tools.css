@@ -1,0 +1,16 @@
+.vorton-workspace .tool-index { display:flex; flex-wrap:wrap; gap:12px 28px; margin:0 0 28px; height:auto; overflow:visible; justify-content:flex-start; }
+.vorton-workspace .tool-index a { height:auto; min-height:44px; max-width:100%; white-space:normal; }
+.vorton-workspace .workspace-tool > header { margin-bottom:28px; max-width:65ch; }
+.vorton-workspace .workspace-tool > header h2 { margin-top:0; }
+.vorton-workspace .tool-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); gap:40px; align-items:start; }
+.vorton-workspace .tool-fields { min-width:0; border:0; padding:0; margin:0; }
+.vorton-workspace .tool-fields legend { padding:0; margin-bottom:20px; font-weight:600; }
+.vorton-workspace .tool-field-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.vorton-workspace .tool-result { min-width:0; }
+.vorton-workspace .tool-result > button + .quiet { margin-top:12px; }
+.vorton-workspace .tool-number { font:500 clamp(2rem,4vw,3rem) var(--aub-font-display); color:var(--aub-accent); margin:0 0 12px; }
+.vorton-workspace .tool-ledger, .vorton-workspace .breakfast-sittings { list-style:none; padding:0; display:grid; gap:12px; margin:20px 0; }
+.vorton-workspace .tool-ledger li { display:flex; align-items:center; gap:20px; font-variant-numeric:tabular-nums; }
+.vorton-workspace .breakfast-sittings li { display:grid; gap:4px; padding:12px 16px; border-radius:var(--aub-control-radius); background:var(--aub-accent-soft); font-variant-numeric:tabular-nums; }
+.vorton-workspace .breakfast-sittings span { color:var(--aub-text-mid); }
+@media(max-width:760px) { .vorton-workspace .tool-layout { grid-template-columns:minmax(0,1fr); gap:24px; } }

@@ -6,6 +6,9 @@ import {
   Store,
   goalInput,
   taskInput,
+  opportunityInput,
+  entryInput,
+  financePlanInput,
   atomicJson,
   check,
 } from "../server/store.mjs";
@@ -173,9 +176,20 @@ export async function seedDemo(root = demoRoot) {
         ],
       ])
         s.tasks.push(entity(id, taskInput(fields)));
-      return {
-        detail: "Loaded explicitly requested fictional demonstration records",
-      };
+      s.settings={defaultOwner:'Mabel Meridian',purpose:brief.operatingPrinciple};
+      for (const [id,fields] of [
+        ['conference',{title:'The Conference That Already Happened',owner:'Mabel Meridian',contact:'Dr. Later, Society of Retrospective Planning',kind:'event',status:'qualified',valueCents:1200000,nextAction:'Confirm which April the conference intends to attend',followUpOn:'2032-04-03',goalId:'reopen-east-wing',notes:'Twenty delegates need a meeting room and a single agreed chronology.'}],
+        ['wedding',{title:'Two Moons, One Wedding',owner:'Solstice Bell',contact:'The Bellweather party',kind:'booking',status:'proposed',valueCents:480000,nextAction:'Send a twelve-room proposal with one breakfast per guest',followUpOn:'2032-04-05',goalId:'finite-breakfast',notes:'The couple requests a sunset ceremony. Confirm which moon is responsible.'}],
+        ['pillows',{title:'Portal-side pillow partnership',owner:'Penny Perihelion',contact:'Soft Landing Cooperative',kind:'partnership',status:'new',valueCents:160000,nextAction:'Compare the pillow trial price with the laundry budget',followUpOn:'2032-04-07',notes:'Supplier claims the pillows remember every dream. Request a washable sample.'}],
+      ]) s.opportunities.push(entity(id,opportunityInput(fields)));
+      s.financePlan=financePlanInput({openingCashCents:2000000,rooms:12,days:30,occupancy:35,rateCents:18000,variableCents:4500,fixedCents:1800000});
+      for (const [id,fields] of [
+        ['deposits',{title:'Opening weekend deposits',kind:'income',amountCents:300000,date:'2032-04-01',category:'Bookings',notes:'Three reservations. All guests currently exist.'}],
+        ['gravity',{title:'Gravity stabilizer servicing',kind:'expense',amountCents:750000,date:'2032-04-01',category:'Maintenance',notes:'The invoice remained on the desk without assistance.'}],
+        ['linen',{title:'Linen that respects linear time',kind:'expense',amountCents:120000,date:'2032-04-01',category:'Housekeeping',notes:'One purchase, one delivery, no recursive duvet covers.'}],
+        ['pantry',{title:'Breakfast rehearsal supplies',kind:'expense',amountCents:48000,date:'2032-04-01',category:'Food',notes:'Toast is expensed only once.'}],
+      ]) s.ledger.push(entity(id,entryInput(fields)));
+      return {detail: "Loaded explicitly requested fictional demonstration records"};
     },
   );
   const packet = councilPacket(state);

@@ -105,6 +105,23 @@ export function goalInput(input) {
     ),
   };
 }
+function integer(value,name,min,max) {
+  check(Number.isSafeInteger(value)&&value>=min&&value<=max,`Invalid ${name}`);
+  return value;
+}
+export function opportunityInput(input) {
+  fields(input,['title','owner','contact','kind','status','valueCents','nextAction','followUpOn','notes','goalId']);
+  return {title:text(input.title,'title',180),owner:text(input.owner,'owner',120),contact:text(input.contact??'','contact',160,false),kind:choose(input.kind,['booking','event','partnership'],'opportunity kind'),status:choose(input.status,['new','qualified','proposed','won','lost'],'opportunity status'),valueCents:integer(input.valueCents,'estimated value',0,10000000000),nextAction:text(input.nextAction??'','next action',500,false),followUpOn:deadline(input.followUpOn),notes:text(input.notes??'','notes',4000,false),goalId:text(input.goalId??'','goal',80,false)};
+}
+export function entryInput(input) {
+  fields(input,['title','kind','amountCents','date','category','notes']);
+  const date=deadline(input.date);check(date,'A ledger date is required');
+  return {title:text(input.title,'title',180),kind:choose(input.kind,['income','expense'],'entry kind'),amountCents:integer(input.amountCents,'amount',1,10000000000),date,category:text(input.category,'category',120),notes:text(input.notes??'','notes',4000,false)};
+}
+export function financePlanInput(input) {
+  fields(input,['openingCashCents','rooms','days','occupancy','rateCents','variableCents','fixedCents']);
+  return {openingCashCents:integer(input.openingCashCents,'opening cash',0,10000000000),rooms:integer(input.rooms,'rooms',1,500),days:integer(input.days,'days',1,31),occupancy:integer(input.occupancy,'occupancy',0,100),rateCents:integer(input.rateCents,'room rate',0,100000000),variableCents:integer(input.variableCents,'variable cost',0,100000000),fixedCents:integer(input.fixedCents,'fixed costs',0,10000000000)};
+}
 export function taskInput(input) {
   fields(input, [
     "title",
@@ -181,13 +198,17 @@ function initial(profile) {
     revision: 0,
     goals: [],
     tasks: [],
+    opportunities: [],
+    ledger: [],
+    settings: {defaultOwner:'Owner',purpose:''},
+    preferenceHistory: [],
     recommendations: [],
     councilSessions: [],
     events: [],
     requests: [],
   };
 }
-function validateState(s, profile) {
+export function validateState(s, profile) {
   check(
     s.schema === 1 &&
       s.profile === profile &&
@@ -199,6 +220,12 @@ function validateState(s, profile) {
   for (const key of ["goals", "tasks", "recommendations", "events", "requests"])
     check(Array.isArray(s[key]), "State is invalid", 503);
   check(s.councilSessions === undefined || Array.isArray(s.councilSessions), "Council sessions are invalid", 503);
+  // Additive stores preserve older installations without seeding their records.
+  for (const key of ['opportunities','ledger','preferenceHistory']) {
+    s[key] ??= [];
+    check(Array.isArray(s[key]), 'Business records are invalid', 503);
+  }
+  s.settings ??= {defaultOwner:'Owner',purpose:''};
   return s;
 }
 export async function safeDirectory(directory) {
@@ -309,7 +336,7 @@ export class Store {
         subjectId: result?.id ?? "",
         actor: result?.actor ?? "owner",
         revision: state.revision,
-        detail: result?.detail ?? "",
+        detail: result?.detail ?? result?.title ?? "",
       });
       state.requests.push({ id: command.requestId, command: serialized });
       check(JSON.stringify(state.council) === JSON.stringify(await loadCouncil(path.join(this.root, profile), profile)), "Council configuration changed during publication. Refresh before saving.", 409);
@@ -344,7 +371,7 @@ function relations(state, data, kind, id = "") {
   }
 }
 function saveEntity(state, kind, data, id, origin = null) {
-  const collection = kind === "goal" ? state.goals : state.tasks;
+  const collection = state[{goal:'goals',task:'tasks',opportunity:'opportunities',entry:'ledger'}[kind]];
   const existing = id ? collection.find((g) => g.id === id) : null;
   if (id) check(existing, "Item not found in this installation", 404);
   relations(state, data, kind, id);
@@ -378,6 +405,23 @@ function saveEntity(state, kind, data, id, origin = null) {
 }
 export function applyCommand(state, command) {
   const { action, payload = {} } = command;
+  if (['opportunity.create','opportunity.update','entry.create','entry.update'].includes(action)) {
+    const kind=action.split('.')[0];
+    return saveEntity(state,kind,kind==='opportunity'?opportunityInput(payload.fields):entryInput(payload.fields),action.endsWith('update')?text(payload.id,'Record ID',80):'');
+  }
+  if (action === 'settings.update') {
+    fields(payload,['defaultOwner','purpose']);
+    const next={defaultOwner:text(payload.defaultOwner,'default owner',120),purpose:text(payload.purpose,'purpose',1000,false)};
+    (state.preferenceHistory??=[]).push({kind:'settings',revision:state.revision+1,at:timestamp(),before:state.settings??null,after:next});
+    state.settings=next;
+    return {detail:'Updated workspace preferences'};
+  }
+  if (action === 'finance.plan.update') {
+    const next=financePlanInput(payload);
+    (state.preferenceHistory??=[]).push({kind:'financePlan',revision:state.revision+1,at:timestamp(),before:state.financePlan??null,after:next});
+    state.financePlan=next;
+    return {detail:'Updated finance assumptions'};
+  }
   if (action === "goal.create" || action === "goal.update")
     return saveEntity(
       state,

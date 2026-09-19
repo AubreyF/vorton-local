@@ -34,7 +34,7 @@ export function OperationsOverview({state}: {state:State}) {
 export function OrganizationOverview({state}: {state:State}) {
   const base=`/${state.profile.toLowerCase()}`;
   return <section className="organization-overview">
-    <header className="page-heading"><h1>Organization</h1><p>{state.council?.behavior.focus}</p></header>
+    <header className="page-heading"><h1>Organization</h1><p>{state.settings?.purpose || state.council?.behavior.focus}</p></header>
     {state.council?.behavior.decisionCriteria&&<section className="panel"><h2>How we decide</h2><p>{state.council.behavior.decisionCriteria}</p><a href={`${base}/council`}>Open Council ↗</a></section>}
     <h2>People & responsibilities</h2>
     <div className="organization-roster">{state.council?.identities.map(person=>{

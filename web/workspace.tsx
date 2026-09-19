@@ -1,5 +1,6 @@
 "use client";
 import "./workspace.css";
+import {Opportunities,Finance,WorkspacePreferences} from './business-pages';
 import { OperationsOverview, OrganizationOverview } from "./workspace-overview";
 import { CouncilDecisions } from "./council-decisions";
 import { LoadingIndicator } from "./loading-indicator";
@@ -37,6 +38,8 @@ const councilSections = [
 ];
 
 const pages = [
+  {id:'opportunities',label:'Opportunities'},
+  {id:'finance',label:'Finance'},
   { id: "guestbook", label: "Organization" },
   { id: "bridge", label: "Bridge" },
   { id: "council", label: "Council" },
@@ -79,6 +82,7 @@ export function WorkspaceApp({
   renderRecommendationPrompt,
   embedded = false,
   renderFactory,
+  renderTools,
   showDecisionHistory = false,
 }: {
   profile: Profile;
@@ -88,6 +92,7 @@ export function WorkspaceApp({
   renderRecommendationPrompt?: (recommendation: Recommendation) => ReactNode;
   embedded?: boolean;
   renderFactory?: () => ReactNode;
+  renderTools?: (controls:{draftTask:(draft:TaskFields)=>void}) => ReactNode;
   showDecisionHistory?: boolean;
 }) {
   const [state, setState] = useState<State | null>(null);
@@ -101,6 +106,7 @@ export function WorkspaceApp({
     kind: "goal" | "task";
     entity?: Goal | Task;
     recommendation?: Recommendation;
+    draft?: TaskFields;
   } | null>(null);
   async function load(signal?: AbortSignal) {
     const generation = ++loadGeneration.current;
@@ -207,6 +213,8 @@ export function WorkspaceApp({
           })
         ) : (
           <>
+            {page === 'opportunities' && <Opportunities state={state} busy={busy} error={error} act={command} draftTask={draft=>setEditor({kind:'task',draft})}/>}
+            {page === 'finance' && <Finance state={state} busy={busy} error={error} act={command}/>}
             {page === "guestbook" && <OrganizationOverview state={state}/>}
             {page === "goals" && (
               <Goals
@@ -238,9 +246,9 @@ export function WorkspaceApp({
                   }
                 />
               )}
-            {page === "tools" && !embedded && <Heading title="Tools" description="No tools are available for this installation yet." />}
+            {page === "tools" && (renderTools ? renderTools({draftTask:draft=>setEditor({kind:'task',draft})}) : !embedded && <Heading title="Tools" description="No tools are available for this installation yet." />)}
             {page === "factory" && renderFactory?.()}
-            {page === "admin" && <Admin state={state} embedded={embedded} showDecisionHistory={showDecisionHistory} />}
+            {page === "admin" && <Admin state={state} embedded={embedded} showDecisionHistory={showDecisionHistory} preferences={!embedded&&state.settings?<WorkspacePreferences state={state} busy={busy} error={error} act={command}/>:undefined} />}
           </>
         )}
       </section>
@@ -873,41 +881,34 @@ function Admin({
   state,
   embedded = false,
   showDecisionHistory = false,
+  preferences,
 }: {
   state: State;
   embedded?: boolean;
   showDecisionHistory?: boolean;
+  preferences?: ReactNode;
 }) {
   return (
     <>
       {!embedded && (
         <Heading
-          title="Admin"
-          description="Keep the authoritative host understandable and recoverable."
+          title="Admin & Activity"
+          description="Workspace preferences, exports, and the paper trail."
         />
       )}
       {showDecisionHistory && <Decisions state={state} />}
+      {preferences}
       <a className="panel tool-tile" href={requestPath(state.profile, "export")}>
         <h2>Export records</h2>
-        <p>Download this installation's goals, tasks, recommendations, and history.</p>
+        <p>{state.settings ? "Download this workspace's planning records, opportunities, ledger, saved forecast, settings, and history." : "Download this workspace's goals, tasks, recommendations, and history."}</p>
       </a>
       <section className="panel">
-        <h2>Local operations</h2>
+        <h2>Workspace record</h2>
         <dl className="facts">
           <dt>Installation</dt>
           <dd>{state.profile}</dd>
           <dt>Record revision</dt>
           <dd>{state.revision}</dd>
-          <dt>Storage</dt>
-          <dd>
-            {state.canonical
-              ? "Authoritative goal and action registers"
-              : `${state.profile}/state/core.json`}
-          </dd>
-          <dt>Agent scheduling</dt>
-          <dd>External Paseo integration. No scheduler runs here.</dd>
-          <dt>Factory</dt>
-          <dd>Not implemented in this package.</dd>
           <dt>Existing authoritative records</dt>
           <dd>
             {state.canonical
@@ -917,11 +918,10 @@ function Admin({
         </dl>
         <p>
           Exports contain private records. Keep them outside source control.
-          Startup and backup instructions are in the package's continuity guide.
         </p>
       </section>
       <section id="activity" className="panel">
-        <h2>Activity</h2>
+        <h2>Activity</h2><p className="quiet">Latest 50 changes. Full history is included in the export.</p>
         <Activity state={state} />
       </section>
     </>
@@ -930,6 +930,7 @@ function Admin({
 function Editor({
   kind,
   entity,
+  draft,
   recommendation,
   state,
   busy,
@@ -939,6 +940,7 @@ function Editor({
 }: {
   kind: "goal" | "task";
   entity?: Goal | Task;
+  draft?: TaskFields;
   recommendation?: Recommendation;
   state: State;
   busy: boolean;
@@ -947,7 +949,7 @@ function Editor({
   save: (fields: GoalFields | TaskFields) => Promise<void>;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
-  const value = (recommendation?.proposal ?? entity ?? {}) as Partial<
+  const value = (recommendation?.proposal ?? entity ?? draft ?? {}) as Partial<
     GoalFields & TaskFields
   >;
   useEffect(() => {
@@ -1038,7 +1040,7 @@ function Editor({
             Owner
             <input
               name="owner"
-              defaultValue={value.owner ?? "Owner"}
+              defaultValue={value.owner || state.settings?.defaultOwner || "Owner"}
               required
               maxLength={120}
             />

@@ -21,6 +21,10 @@ The seed command creates fictional records in `.runtime/last-resort`. It refuses
 
 Use Bridge for active goals, blocked work, next steps, and pending decisions. Organization shows the Council roster and each person's current responsibilities. Goals and Tasks open the underlying records. The shared upper-left menu contains six appearances, interface zoom, and the installed Vorton version at its bottom. Appearance and zoom follow you between workspaces on the same origin.
 
+Tools includes Hilbert’s Overbooking Desk and Breakfast Causality Lab. Both calculate a scenario and can open an editable Task containing the result and assumptions. See [Building workspace tools](docs/TOOLS.md) for the reusable pattern.
+
+Opportunities tracks bookings, events, partnerships, and next actions. Finance separates a USD ledger from a room-economics forecast. Admin & Activity saves workspace preferences, exports records, and shows recent changes. Fresh demo stores include three opportunities and four ledger entries; existing stores keep their data and start these collections empty. Seeding never overwrites an installation. Forecasts use your saved assumptions and exclude pipeline estimates from recorded income.
+
 ## Boundaries
 
 Repository work requires no quota verification or weekly allowance floor. Future quota controls belong in the Paseo scheduler.

@@ -1,7 +1,19 @@
 # Changelog
 
+## 0.2.0-preview.3, September 19, 2026
+
+- Preserve restoration of older backups when additive business fields are absent, and initialize new preference histories consistently.
+- Defer the Bridge vocabulary card's code and styles until that view mounts.
+- Add saved Opportunities, Finance, and Admin & Activity sections using the shared workspace shell. Keep pipeline estimates, ledger entries, and forecast assumptions separate.
+- Seed three fictional opportunities and four ledger entries in new Last Resort demo stores. Existing stores retain their records and gain empty optional business collections on read.
+- Add workspace purpose and default owner settings, scoped exports, record editing history, and opportunity-to-Task drafts.
+
 ## 0.2.0-preview.2, unreleased
 
+- Load shared shell styles once per application entry, preserve explicit navigation button behavior, and audit accessibility through the shared components.
+- Require a trusted host, project, and repository binding before Factory queue admission and attempt preparation. Removed or mismatched projects hold work without recreating them.
+- Retain Factory workspace membership across retries and recovery. Uncertain workspace creation and removed registrations hold for reconciliation instead of creating duplicates.
+- Add a shared Tools shelf with Last Resort room-shuffle and breakfast planners, explicit assumptions, bounded calculations, and editable Task drafts.
 - Replace the separate Last Resort shell with shared workspace toolbar, menu, theme, zoom, navigation, fonts, and background components. Share appearance across organizations and replace static demo copy with record-driven Bridge and Organization views.
 
 ## 0.2.0-preview.1, September 18, 2026

@@ -40,6 +40,11 @@ export type EntityMeta = {
 };
 export type Goal = GoalFields & EntityMeta;
 export type Task = TaskFields & EntityMeta;
+export type OpportunityFields = {title:string;owner:string;contact:string;kind:'booking'|'event'|'partnership';status:'new'|'qualified'|'proposed'|'won'|'lost';valueCents:number;nextAction:string;followUpOn:string;notes:string;goalId:string};
+export type Opportunity = OpportunityFields & EntityMeta;
+export type LedgerFields = {title:string;kind:'income'|'expense';amountCents:number;date:string;category:string;notes:string};
+export type LedgerEntry = LedgerFields & EntityMeta;
+export type FinancePlan = {openingCashCents:number;rooms:number;days:number;occupancy:number;rateCents:number;variableCents:number;fixedCents:number};
 export type Recommendation = {
   id: string;
   role: Role;
@@ -67,6 +72,10 @@ export type State = {
   revision: number;
   goals: Goal[];
   tasks: Task[];
+  opportunities?: Opportunity[];
+  ledger?: LedgerEntry[];
+  financePlan?: FinancePlan;
+  settings?: {defaultOwner:string;purpose:string};
   recommendations: Recommendation[];
   councilSessions?: {
     id: string;

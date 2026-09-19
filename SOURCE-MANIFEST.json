@@ -1,7 +1,7 @@
 {
   "contract": "vorton.public-source.v1",
-  "version": "0.2.0-preview.2",
-  "sourceDigest": "a833c387d25c4a79f9112129c5ac6d0f606b9b6984597e0a01a0871144b5ba85",
+  "version": "0.2.0-preview.3",
+  "sourceDigest": "24e361b343c0a44d6c0f34b8813feeba2d49ea725f116e2fd3feaad9a6fab138",
   "files": [
     {
       "path": ".github/workflows/ci.yml",
@@ -17,7 +17,7 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "d44d0a91887bce7ecc066c2d062fab7ae4cfba544a2b280078a4f97c1e4834a9"
+      "sha256": "5b3f35de43f2d86c3927157e0e8afaeee240607b83ecd82a39811286d5c627bc"
     },
     {
       "path": "LICENSE",
@@ -25,7 +25,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "393af9ead9260906c83d00c2c3a785181003a03de12c43a6b3885646b4eb963b"
+      "sha256": "00f1a6074b18131c57aa1c57898865fcb878d3a6cf06bf41c903a7eaf40ff7de"
     },
     {
       "path": "SECURITY.md",
@@ -44,8 +44,12 @@
       "sha256": "7a0321af7360e4bf7e66fb1cc0f024556548f102e077c798bff97e9a02734fbb"
     },
     {
+      "path": "docs/TOOLS.md",
+      "sha256": "c7fd70d47925aa0c941c96d3010470baabae939b5ef2c16916ddebad6f05a742"
+    },
+    {
       "path": "docs/VERSIONING.md",
-      "sha256": "2b1205090d712050dec0d5e13e7e890cad036d5bbccd3ddddec98533cc00ee0a"
+      "sha256": "37debe5676872847f8fae7a65d619107040b2029913654d616e8e813a8ce163f"
     },
     {
       "path": "modules/council/config.mjs",
@@ -53,15 +57,15 @@
     },
     {
       "path": "package-lock.json",
-      "sha256": "2c922e129d8f92f893252cc67b7762f5300aac937021140f1d92e0e47411c414"
+      "sha256": "0aa3fcdb9e66bd9e16ea010051bdd3418a148421654ae90c99315b1bce29a29d"
     },
     {
       "path": "package.json",
-      "sha256": "1596657e1ac8e627a557585f7476e2d46919d8a114139a36a6b4c16c3f82c921"
+      "sha256": "be31e74195d8e6feb1f022f56d72db3ac2600541be3cf65bd86ae5cf4190fc6b"
     },
     {
       "path": "scripts/check-demo-browser.mjs",
-      "sha256": "54fcb1206419aa6bc0d438a6c1725e5d00983b6b0280946ae18a51147a50d1a5"
+      "sha256": "45e3b1473b0a6a8a504b96c4a8883f90ec76ecf9becad118de77ec1c77386e85"
     },
     {
       "path": "scripts/check-version.mjs",
@@ -69,7 +73,7 @@
     },
     {
       "path": "scripts/demo-seed.mjs",
-      "sha256": "0acc59bd4df79bb6b43bf9e8102522cf8bcdf01bd430b6848468e76138e32039"
+      "sha256": "c13f9e4082c24abad5fa013c1b7f4bea9d1f1fa6b3e9d8eb4b2c12b8c899e013"
     },
     {
       "path": "scripts/demo.mjs",
@@ -93,7 +97,7 @@
     },
     {
       "path": "server/store.mjs",
-      "sha256": "53a3eb9e0c44309e4f80aca8072ec5ae5a5112c5c074f33e9827c29acd341269"
+      "sha256": "d862ddf9aeee88a9e7586c782492877a51ed958099161e203a2f2cfe15769f8f"
     },
     {
       "path": "server/version.mjs",
@@ -102,6 +106,10 @@
     {
       "path": "server/workspace-routes.mjs",
       "sha256": "479a79f4dc2b5558c28e1e45dbb73750afc9f375fa2f6f03cb0f0b4f45eaa8a9"
+    },
+    {
+      "path": "tests/business.test.mjs",
+      "sha256": "ea6b9c87e3a224d9242875ab270f7e6bd332ee40bd2bf035daac1d6554a578c4"
     },
     {
       "path": "tests/core-http.test.mjs",
@@ -124,6 +132,10 @@
       "sha256": "365d41aee83c0d5cc776d3a010ec106fe38983528f246c74b46880da010d6ac4"
     },
     {
+      "path": "tests/hotel-tools.test.mjs",
+      "sha256": "7a33d9f8efcf4241a64b98475fe952b8d65269ac12c7eb260bd23720eb3d1dd4"
+    },
+    {
       "path": "tests/load-progress.test.mjs",
       "sha256": "f444b38f72c176354e6a4538dc05f96c976c59acb0b6fca09a77479071670748"
     },
@@ -142,6 +154,14 @@
     {
       "path": "vite.config.js",
       "sha256": "d5f74b8dbc0d569f8dfa5f496275fc6417c13e4c674fcb74f60a6e4b95439718"
+    },
+    {
+      "path": "web/business-pages.css",
+      "sha256": "f1fcded7b32bdb59b34a022f96671b37f0cbf1772b701447268719fef7ccfa6c"
+    },
+    {
+      "path": "web/business-pages.tsx",
+      "sha256": "0522fdff81814b393c015e4a3463b9f9fd256a9fff03f26e506a18965147c044"
     },
     {
       "path": "web/council-avatar.tsx",
@@ -201,7 +221,7 @@
     },
     {
       "path": "web/design/application-header.tsx",
-      "sha256": "128c700eda426a06dbcd95063c57f1564bbf115d3eaefdc155f3d5e8c9dbc323"
+      "sha256": "16f42c372b647104c1e7d7c914acd1c8348a3e59677a243fdddf6499854c7093"
     },
     {
       "path": "web/design/background-atmosphere.tsx",
@@ -481,11 +501,15 @@
     },
     {
       "path": "web/design/workspace-navigation.tsx",
-      "sha256": "61e539681a999c825383c7029526ba4026c9d37258543213586d2a01ea678f7c"
+      "sha256": "22cc23bbe8993eb4d5da8fb0a53d421109369278e77dca18bcc964bd63d8511f"
     },
     {
       "path": "web/design/workspace-shell.css",
       "sha256": "975ca815e80156507770aac1442bafad7984a60fcdaa6335324055ee68668ada"
+    },
+    {
+      "path": "web/finance-model.ts",
+      "sha256": "32cbc60bb617803db7f5a3efa8bc4fa560c290d4f8225548fd2b8b644ea43d94"
     },
     {
       "path": "web/index.html",
@@ -509,11 +533,27 @@
     },
     {
       "path": "web/main.tsx",
-      "sha256": "e1f32a8589f5a06bb71c45e5931fc073cb24493843765f5ce2873b695d1bcfd9"
+      "sha256": "18e7008373736490e58a9759b554897700d12e13a44d409baecbb8908df67383"
+    },
+    {
+      "path": "web/tools/hotel-calculations.ts",
+      "sha256": "6a7a92d976c1e8be3a56e1eefe9da37b1dc1adeb720a9616b778eaaf69adb6da"
+    },
+    {
+      "path": "web/tools/last-resort-tools.tsx",
+      "sha256": "3ab040fd90a3228dd54b9accdd04390ea4bc8501223caabc71fefc3aa6aaa00b"
+    },
+    {
+      "path": "web/tools/tools-page.tsx",
+      "sha256": "a23c37cee2933f7751e753bba517c30e7f2dbcbcda7e765214da1832c732f5fa"
+    },
+    {
+      "path": "web/tools/tools.css",
+      "sha256": "4ed2dc79a8304ab48d8689c622581005102f27608670b189b36c993ac77e3605"
     },
     {
       "path": "web/types.ts",
-      "sha256": "5647adeafe83563aec4121991b855f53d11dad8f2e4f3d918e90ad8dd7d767c7"
+      "sha256": "cc7db56aff5863e410931981bde428a0af1f84cce48e0c025389dbba4b704e14"
     },
     {
       "path": "web/vite-env.d.ts",
@@ -525,7 +565,7 @@
     },
     {
       "path": "web/workspace-overview.tsx",
-      "sha256": "e4fe3d44ffef1e2458f0746c9556da45d39780c44a039f857491f946109c165c"
+      "sha256": "ac2d69c8219d52002a0c089894491f87bb2a0d72be973037e5c68b73a171cdaf"
     },
     {
       "path": "web/workspace.css",
@@ -533,7 +573,7 @@
     },
     {
       "path": "web/workspace.tsx",
-      "sha256": "88d96de9d1959d0b0a8f22ff64e74454974f5a2c7dbd8cd8e41e615a2c14090f"
+      "sha256": "2deda11b2b204d31bcad890f0fd430266c0486545389eb7de72f5959fcd82926"
     }
   ],
   "gitHistory": "not included; separately unverified",

@@ -2,10 +2,9 @@
 import { type ReactNode } from "react";
 import { InstallationSwitcher } from "./installation-switcher";
 import { ThemeControls } from "./theme-controls";
-import "./workspace-shell.css";
-import "./fonts.css";
-import "./theme-preview.css";
-import "./menu-selection.css";
+
+// Each application entry loads the shared shell styles once. Importing them
+// here too duplicates native layout CSS in the client component bundle.
 
 export function ApplicationHeader({profile, labels, children, actions}: {profile: string; labels?: Record<string,string>; children: ReactNode; actions?: ReactNode}) {
   return <header className="topbar"><InstallationSwitcher profile={profile} labels={labels} actions={<><ThemeControls inline/>{actions}</>}/>{children}</header>;

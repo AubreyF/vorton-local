@@ -57,6 +57,10 @@ try {
       "council",
       "goals",
       "tasks",
+      "tools",
+      "opportunities",
+      "finance",
+      "admin",
       "guestbook",
     ]) {
       assert.equal(
@@ -198,11 +202,101 @@ try {
   assert.match(await page.locator('.operations-metrics').innerText(), /0\s+Awaiting your decision/);
   await page.getByRole('link',{name:'Locate Room 404 before accepting another booking',exact:true}).click();
   const linkedTask = page.locator(`article[id="${new URL(page.url()).hash.slice(1)}"]`);
-  await linkedTask.waitFor();
+  await linkedTask.waitFor().catch(async error=>{
+    await page.screenshot({path:path.join(output,'failed-record-link.png'),fullPage:true});
+    throw new Error(`${error.message}\n${JSON.stringify({url:page.url(),errors,body:(await page.locator('body').innerText()).slice(0,1600)})}`);
+  });
   assert.match(await linkedTask.innerText(),/Locate Room 404/);
+  await page.goto(`${origin}/lastresort/tools`,{waitUntil:'networkidle'});
+  const rooms=page.locator('#hilbert-desk'),breakfast=page.locator('#breakfast-lab');
+  await rooms.getByText('4 rooms short',{exact:true}).waitFor();
+  await rooms.getByLabel('Available rooms',{exact:true}).fill('40');
+  await rooms.getByText('4 rooms spare',{exact:true}).waitFor();
+  await rooms.getByLabel('Available rooms',{exact:true}).fill('');
+  assert.equal(await rooms.getByRole('button',{name:'Draft room task'}).count(),0);
+  await rooms.getByLabel('Available rooms',{exact:true}).fill('32');
+  const before=await (await page.request.get(`${origin}/api/lastresort/state`)).json();
+  await rooms.getByRole('button',{name:'Draft room task'}).click();
+  assert.equal(await page.getByLabel('Title',{exact:true}).inputValue(),'Find 4 more rooms before accepting arrivals');
+  await page.keyboard.press('Escape');
+  const after=await (await page.request.get(`${origin}/api/lastresort/state`)).json();
+  assert.equal(after.revision,before.revision,'Canceling a tool draft writes nothing');
+  await breakfast.getByText('110 minutes',{exact:true}).waitFor();
+  await breakfast.getByLabel('Hungry guests',{exact:true}).fill('0');
+  await breakfast.getByText('0 minutes',{exact:true}).waitFor();
+  assert.equal(await breakfast.getByRole('button',{name:'Draft breakfast task'}).count(),0);
+  await breakfast.getByLabel('Hungry guests',{exact:true}).fill('48');
+  await breakfast.getByRole('button',{name:'Draft breakfast task'}).click();
+  await page.getByLabel('Owner',{exact:true}).fill('Solstice Bell');
+  await page.getByRole('button',{name:'Save task',exact:true}).click();
+  await page.getByRole('dialog').waitFor({state:'hidden'});
+  const saved=await (await page.request.get(`${origin}/api/lastresort/state`)).json();
+  assert.equal(saved.tasks.length,before.tasks.length+1);
+  const generated=saved.tasks.find(task=>task.title==='Plan breakfast for 48 guests');
+  assert.match(generated.notes,/110 minutes; finish 09:50/);
+  assert.match(generated.notes,/Assumes all guests are ready/);
+  await page.goto(`${origin}/lastresort/tasks`,{waitUntil:'networkidle'});
+  await page.getByText('Plan breakfast for 48 guests',{exact:true}).waitFor();
+  await page.goto(`${origin}/lastresort/opportunities`,{waitUntil:'networkidle'});
+  await page.getByRole('button',{name:'New opportunity',exact:true}).click();
+  const opportunityForm=page.getByRole('form',{name:'New opportunity',exact:true});
+  await opportunityForm.getByLabel('Title',{exact:true}).fill('The annual meeting of yesterday');
+  await opportunityForm.getByLabel('Estimated value (USD)').fill('250.50');
+  await opportunityForm.getByLabel('Next action',{exact:true}).fill('Confirm yesterday is available');
+  await opportunityForm.getByRole('button',{name:'Save',exact:true}).click();
+  await opportunityForm.waitFor({state:'hidden'});
+  await page.reload({waitUntil:'networkidle'});
+  const opportunityCard=page.locator('article').filter({has:page.getByRole('heading',{name:'The annual meeting of yesterday',exact:true})});
+  await opportunityCard.getByRole('button',{name:'Draft next task'}).click();
+  assert.equal(await page.getByLabel('Title',{exact:true}).inputValue(),'Confirm yesterday is available');
+  await page.keyboard.press('Escape');
+  await opportunityCard.getByRole('button',{name:'Edit opportunity'}).click();
+  const editOpportunity=page.getByRole('form',{name:'Edit opportunity'});
+  await editOpportunity.getByRole('combobox',{name:'Stage',exact:true}).selectOption('won');
+  await editOpportunity.getByRole('button',{name:'Save',exact:true}).click();
+  await editOpportunity.waitFor({state:'hidden'});
+  await page.getByRole('combobox',{name:'Show opportunities',exact:true}).selectOption('won');
+  await opportunityCard.waitFor();
+  await page.goto(`${origin}/lastresort/finance`,{waitUntil:'networkidle'});
+  await page.getByText('$13,820.00',{exact:true}).waitFor();
+  await page.getByRole('button',{name:'New entry',exact:true}).click();
+  const entryForm=page.getByRole('form',{name:'New ledger entry'});
+  await entryForm.getByLabel('Title',{exact:true}).fill('A punctual deposit');
+  await entryForm.getByLabel('Entry kind').selectOption('income');
+  await entryForm.getByLabel('Amount (USD)').fill('123.45');
+  await entryForm.getByLabel('Date',{exact:true}).fill('2032-04-02');
+  await entryForm.getByLabel('Category',{exact:true}).fill('Bookings');
+  await entryForm.getByRole('button',{name:'Save',exact:true}).click();
+  await entryForm.waitFor({state:'hidden'});
+  await page.getByText('$13,943.45',{exact:true}).waitFor();
+  const forecast=page.getByRole('form',{name:'Forecast assumptions'});
+  await forecast.getByLabel('Occupancy (%)').fill('50');
+  await forecast.getByRole('button',{name:'Save',exact:true}).click();
+  await forecast.getByText('Forecast assumptions saved.').waitFor();
+  await page.reload({waitUntil:'networkidle'});
+  assert.equal(await page.getByLabel('Occupancy (%)').inputValue(),'50');
+  await page.getByText('$6,300.00',{exact:true}).waitFor();
+  await page.goto(`${origin}/lastresort/admin`,{waitUntil:'networkidle'});
+  const preferences=page.getByRole('form',{name:'Workspace settings'});
+  await preferences.getByLabel('Default task and opportunity owner').fill('Penny Perihelion');
+  await preferences.getByLabel('Workspace purpose').fill('Keep the towels and the accounts finite.');
+  await preferences.getByRole('button',{name:'Save',exact:true}).click();
+  await preferences.getByText('Workspace settings saved.').waitFor();
+  await page.getByText('Updated workspace preferences',{exact:true}).waitFor();
+  const exported=await (await page.request.get(`${origin}/api/lastresort/export`)).json();
+  assert.equal(exported.opportunities.length,4);assert.equal(exported.ledger.length,5);
+  assert.equal(exported.opportunities.find(row=>row.title==='The annual meeting of yesterday').history.length,1);
+  assert.equal(exported.financePlan.occupancy,50);assert.equal(exported.preferenceHistory.length,2);
+  assert.equal(exported.requests,undefined);
+  await page.goto(`${origin}/lastresort/guestbook`,{waitUntil:'networkidle'});
+  await page.getByText('Keep the towels and the accounts finite.',{exact:true}).waitFor();
+  await page.goto(`${origin}/lastresort/tasks`,{waitUntil:'networkidle'});
+  await page.getByRole('button',{name:'New task',exact:true}).click();
+  assert.equal(await page.getByLabel('Owner',{exact:true}).inputValue(),'Penny Perihelion');
+  await page.keyboard.press('Escape');
   assert.deepEqual(errors, []);
   console.log(
-    "Demo desktop/mobile routes, six appearances, menu version, saved Council voices, keyboard dismissal, persisted Goals and Tasks, and recommendation acceptance passed.",
+    "Desktop/mobile routes, six themes, Tools drafts, Opportunities, ledger, forecast, workspace settings, export history, Goals/Tasks and Council acceptance passed.",
   );
 } finally {
   await browser?.close();

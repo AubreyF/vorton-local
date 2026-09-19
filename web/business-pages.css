@@ -1,0 +1,71 @@
+.vorton-workspace .business-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 48px;
+  margin: 24px 0 32px;
+}
+.vorton-workspace .business-metrics > div {
+  display: grid;
+  gap: 8px;
+  flex: 1 1 180px;
+}
+.vorton-workspace .business-metrics strong {
+  font: 500 clamp(1.8rem, 3vw, 2.7rem) var(--aub-font-display);
+  color: var(--aub-accent);
+}
+.vorton-workspace .business-metrics span {
+  color: var(--aub-text-mid);
+}
+.vorton-workspace .business-fields,
+.vorton-workspace .business-cards,
+.vorton-workspace .business-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+.vorton-workspace .business-cards .panel {
+  margin: 0;
+}
+.vorton-workspace .business-editor fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.vorton-workspace .business-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.vorton-workspace .business-filter {
+  max-width: 280px;
+}
+.vorton-workspace .business-table {
+  overflow-x: auto;
+}
+.vorton-workspace .business-table:focus-visible {
+  outline: 2px solid var(--aub-accent);
+  outline-offset: 4px;
+}
+.vorton-workspace .business-table table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.vorton-workspace .business-table th,
+.vorton-workspace .business-table td {
+  padding: 12px 16px 12px 0;
+  vertical-align: top;
+}
+.vorton-workspace .business-table td:last-child {
+  padding-right: 0;
+}
+@media (max-width: 760px) {
+  .vorton-workspace .business-fields,
+  .vorton-workspace .business-cards,
+  .vorton-workspace .business-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
